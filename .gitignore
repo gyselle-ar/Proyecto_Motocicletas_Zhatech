@@ -21,7 +21,7 @@
 *.ear
 
 # Netbeans
-/nbprojectprivate/
+/nbproject/private/
 /nbbuild/
 /nbdist/
 /.nb-gradle/
