@@ -73,6 +73,23 @@ public abstract class Motocicleta implements Testeable {
 
     public abstract String getInstrucciones();
 
+    @Override
+    public boolean encenderSistema() {
+        return true;}
+
+    @Override
+    public boolean testearCompatibilidad() {
+        return true;}
+
+    @Override
+    public String generarReporte() {
+        return "Reporte de compatibilidad.";}
+
+    @Override
+    public void configurarComponentes() {}
+
+    @Override
+    public void resetearConfiguracion() {}
     
     @Override
     public String toString() {
