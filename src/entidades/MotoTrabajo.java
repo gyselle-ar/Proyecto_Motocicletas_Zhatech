@@ -1,5 +1,8 @@
 package entidades;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public class MotoTrabajo extends Motocicleta {
     
     private int capacidadCarga;
@@ -8,8 +11,8 @@ public class MotoTrabajo extends Motocicleta {
     public MotoTrabajo() {
     }
 
-    public MotoTrabajo(int capacidadCarga, float consumoCombustible, String marca, String tipoCarenaje, String tipoMotor, String tipoRuedas, String tipoManillar, boolean estadoMotor) {
-        super(marca, tipoCarenaje, tipoMotor, tipoRuedas, tipoManillar, estadoMotor);
+    public MotoTrabajo(int capacidadCarga, float consumoCombustible, int idMotocicleta, String marca, String tipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
+        super(idMotocicleta, marca, tipoMoto, fechaCreacion, componentes);
         this.capacidadCarga = capacidadCarga;
         this.consumoCombustible = consumoCombustible;
     }
@@ -30,24 +33,50 @@ public class MotoTrabajo extends Motocicleta {
         this.consumoCombustible = consumoCombustible;
     }
 
-    public void testDeResistencia() {
-
+    public String testDeResistencia() {
+        if (capacidadCarga > 0 && consumoCombustible > 0 ) {
+            return "";
+        }else{
+            return "";
+        }
     }
-
+    
     @Override
-    public String getInstrucciones() {
-        return "Instrucciones específicas para Moto de Trabajo.";
+    public Reporte generarReporte(){
+        
+        String motor = "";
+        String carenaje = "";
+        String ruedas = "";
+        String manillar = "";
+ 
+        for(Componente c: componentes){
+            if (c.getCategoria().equalsIgnoreCase("Motor")) {
+                motor = c.getNombre();
+            }
+            
+            if (c.getCategoria().equalsIgnoreCase("Carenaje")) {
+                carenaje = c.getNombre();
+            }
+            
+            if (c.getCategoria().equalsIgnoreCase("Ruedas")) {
+                ruedas = c.getNombre();
+            }
+            
+            if (c.getCategoria().equalsIgnoreCase("Manillar")) {
+                manillar = c.getNombre();
+            }
+        }
+        
+        if (motor.equalsIgnoreCase("") && ruedas.equalsIgnoreCase("")) {
+            return new Reporte(0, idMotocicleta, "Descripción", "Resultado");
+        }
+        
+        return new Reporte(0, idMotocicleta, "Descripción general", "Resultado general");
     }
-
-
-    @Override public boolean encenderSistema() { return true; }
-    @Override public boolean testearCompatibilidad() { return true; }
-    @Override public String generarReporte() { return "Reporte de resistencia de carga."; }
-    @Override public void configurarComponentes() { }
-    @Override public void resetearConfiguracion() { }
 
     @Override
     public String toString() {
-        return "MotoTrabajo{" + "capacidadCarga=" + capacidadCarga + ", consumo=" + consumoCombustible + "} " + super.toString();
+        return "MotoTrabajo{" + "capacidadCarga=" + capacidadCarga 
+                + ", consumoCombustible=" + consumoCombustible + '}';
     }
 }

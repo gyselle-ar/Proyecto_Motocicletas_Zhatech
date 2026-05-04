@@ -1,5 +1,8 @@
 package entidades;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public class MotoCruiser extends Motocicleta {
     
     private String ergonomiaPostura;
@@ -8,8 +11,8 @@ public class MotoCruiser extends Motocicleta {
     public MotoCruiser() {
     }
 
-    public MotoCruiser(String ergonomiaPostura, double volumenSonidoEscape, String marca, String tipoCarenaje, String tipoMotor, String tipoRuedas, String tipoManillar, boolean estadoMotor) {
-        super(marca, tipoCarenaje, tipoMotor, tipoRuedas, tipoManillar, estadoMotor);
+    public MotoCruiser(String ergonomiaPostura, double volumenSonidoEscape, int idMotocicleta, String marca, String tipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
+        super(idMotocicleta, marca, tipoMoto, fechaCreacion, componentes);
         this.ergonomiaPostura = ergonomiaPostura;
         this.volumenSonidoEscape = volumenSonidoEscape;
     }
@@ -30,25 +33,50 @@ public class MotoCruiser extends Motocicleta {
         this.volumenSonidoEscape = volumenSonidoEscape;
     }
 
-    public void testDeConfort() {
+    public String testDeConfort() {
+        if (ergonomiaPostura.equalsIgnoreCase("") && volumenSonidoEscape > 0) {
+            return "";
+        }else{
+            return "";
+        }
     }
-
+    
     @Override
-    public String getInstrucciones() {
-        return "Instrucciones específicas para Moto Cruiser.";
+    public Reporte generarReporte(){
+        
+        String motor = "";
+        String carenaje = "";
+        String ruedas = "";
+        String manillar = "";
+ 
+        for(Componente c: componentes){
+            if (c.getCategoria().equalsIgnoreCase("Motor")) {
+                motor = c.getNombre();
+            }
+            
+            if (c.getCategoria().equalsIgnoreCase("Carenaje")) {
+                carenaje = c.getNombre();
+            }
+            
+            if (c.getCategoria().equalsIgnoreCase("Ruedas")) {
+                ruedas = c.getNombre();
+            }
+            
+            if (c.getCategoria().equalsIgnoreCase("Manillar")) {
+                manillar = c.getNombre();
+            }
+        }
+        
+        if (motor.equalsIgnoreCase("") && ruedas.equalsIgnoreCase("")) {
+            return new Reporte(0, idMotocicleta, "Descripción", "Resultado");
+        }
+        
+        return new Reporte(0, idMotocicleta, "Descripción general", "Resultado general");
     }
-
-    @Override public boolean encenderSistema() { 
-    return true; }
-    @Override public boolean testearCompatibilidad() { 
-    return true; }
-    @Override public String generarReporte() { 
-    return "Reporte de ergonomía y escape."; }
-    @Override public void configurarComponentes() { }
-    @Override public void resetearConfiguracion() { }
 
     @Override
     public String toString() {
-        return "MotoCruiser{" + "ergonomia=" + ergonomiaPostura + ", sonidoEscape=" + volumenSonidoEscape + "} " + super.toString();
-    }
+        return "MotoCruiser{" + "ergonomiaPostura=" + ergonomiaPostura 
+                + ", volumenSonidoEscape=" + volumenSonidoEscape + '}';
+    } 
 }

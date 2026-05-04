@@ -1,17 +1,22 @@
 package entidades;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public class MotoDeportiva extends Motocicleta {
     
     private double aerodinamica;
     private boolean modoPista;
+    private boolean turboActivado;
 
     public MotoDeportiva() {
     }
 
-    public MotoDeportiva(double aerodinamica, boolean modoPista, String marca, String tipoCarenaje, String tipoMotor, String tipoRuedas, String tipoManillar, boolean estadoMotor) {
-        super(marca, tipoCarenaje, tipoMotor, tipoRuedas, tipoManillar, estadoMotor);
+    public MotoDeportiva(double aerodinamica, boolean modoPista, boolean turboActivado, int idMotocicleta, String marca, String tipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
+        super(idMotocicleta, marca, tipoMoto, fechaCreacion, componentes);
         this.aerodinamica = aerodinamica;
         this.modoPista = modoPista;
+        this.turboActivado = false;
     }
 
     public double getAerodinamica() {
@@ -30,30 +35,54 @@ public class MotoDeportiva extends Motocicleta {
         this.modoPista = modoPista;
     }
 
+    public boolean isTurboActivado() {
+        return turboActivado;
+    }
+
+    public void setTurboActivado(boolean turboActivado) {
+        this.turboActivado = turboActivado;
+    }
+
     public void activarTurbo() {
-
+        turboActivado = true;
     }
-
+    
     @Override
-    public String getInstrucciones() {
-        return "Instrucciones específicas para Moto Deportiva.";
+    public Reporte generarReporte(){
+        
+        String motor = "";
+        String carenaje = "";
+        String ruedas = "";
+        String manillar = "";
+ 
+        for(Componente c: componentes){
+            if (c.getCategoria().equalsIgnoreCase("Motor")) {
+                motor = c.getNombre();
+            }
+            
+            if (c.getCategoria().equalsIgnoreCase("Carenaje")) {
+                carenaje = c.getNombre();
+            }
+            
+            if (c.getCategoria().equalsIgnoreCase("Ruedas")) {
+                ruedas = c.getNombre();
+            }
+            
+            if (c.getCategoria().equalsIgnoreCase("Manillar")) {
+                manillar = c.getNombre();
+            }
+        }
+        
+        if (motor.equalsIgnoreCase("") && ruedas.equalsIgnoreCase("")) {
+            return new Reporte(0, idMotocicleta, "Descripción", "Resultado");
+        }
+        
+        return new Reporte(0, idMotocicleta, "Descripción general", "Resultado general");
     }
-
-    @Override public boolean encenderSistema() { 
-        return true; }
-    
-    @Override public boolean testearCompatibilidad() { 
-        return true; }
-    
-    @Override public String generarReporte() {
-        return "Reporte de compatibilidad deportiva."; }
-    
-    @Override public void configurarComponentes() { }
-    
-    @Override public void resetearConfiguracion() { }
 
     @Override
     public String toString() {
-        return "MotoDeportiva{" + "aerodinamica=" + aerodinamica + ", modoPista=" + modoPista + "} " + super.toString();
+        return "MotoDeportiva{" + "aerodinamica=" + aerodinamica 
+                + ", modoPista=" + modoPista + '}';
     }
 }
