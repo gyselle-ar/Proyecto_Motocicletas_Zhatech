@@ -22,6 +22,10 @@ public class MotocicletaDAO implements CrudSimpleInterface<Motocicleta>{
     private ResultSet rs;
     private boolean resp;
 
+    public MotocicletaDAO() {
+        this.CON = Conexion.getInstancia();;
+    }
+
     public MotocicletaDAO(Conexion CON) {
         this.CON = CON;
     }
