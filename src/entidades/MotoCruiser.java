@@ -11,8 +11,8 @@ public class MotoCruiser extends Motocicleta {
     public MotoCruiser() {
     }
 
-    public MotoCruiser(String ergonomiaPostura, double volumenSonidoEscape, int idMotocicleta, String marca, String tipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
-        super(idMotocicleta, marca, tipoMoto, fechaCreacion, componentes);
+    public MotoCruiser(String ergonomiaPostura, double volumenSonidoEscape, int idMotocicleta, int idMarca, int idTipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
+        super(idMotocicleta, idMarca, idTipoMoto, fechaCreacion, componentes);
         this.ergonomiaPostura = ergonomiaPostura;
         this.volumenSonidoEscape = volumenSonidoEscape;
     }

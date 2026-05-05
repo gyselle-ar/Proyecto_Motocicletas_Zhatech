@@ -12,11 +12,11 @@ public class MotoDeportiva extends Motocicleta {
     public MotoDeportiva() {
     }
 
-    public MotoDeportiva(double aerodinamica, boolean modoPista, boolean turboActivado, int idMotocicleta, String marca, String tipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
-        super(idMotocicleta, marca, tipoMoto, fechaCreacion, componentes);
+    public MotoDeportiva(double aerodinamica, boolean modoPista, boolean turboActivado, int idMotocicleta, int idMarca, int idTipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
+        super(idMotocicleta, idMarca, idTipoMoto, fechaCreacion, componentes);
         this.aerodinamica = aerodinamica;
         this.modoPista = modoPista;
-        this.turboActivado = false;
+        this.turboActivado = turboActivado;
     }
 
     public double getAerodinamica() {

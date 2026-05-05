@@ -6,18 +6,18 @@ import java.util.List;
 public abstract class Motocicleta implements Testeable {
     
     protected int idMotocicleta;
-    protected String marca;
-    protected String tipoMoto;
+    protected int idMarca;
+    protected int idTipoMoto;
     protected LocalDate fechaCreacion;
     protected List<Componente> componentes;
             
     public Motocicleta() {
     }
 
-    public Motocicleta(int idMotocicleta, String marca, String tipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
+    public Motocicleta(int idMotocicleta, int idMarca, int idTipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
         this.idMotocicleta = idMotocicleta;
-        this.marca = marca;
-        this.tipoMoto = tipoMoto;
+        this.idMarca = idMarca;
+        this.idTipoMoto = idTipoMoto;
         this.fechaCreacion = fechaCreacion;
         this.componentes = componentes;
     }
@@ -30,20 +30,20 @@ public abstract class Motocicleta implements Testeable {
         this.idMotocicleta = idMotocicleta;
     }
 
-    public String getMarca() {
-        return marca;
+    public int getIdMarca() {
+        return idMarca;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setIdMarca(int idMarca) {
+        this.idMarca = idMarca;
     }
 
-    public String getTipoMoto() {
-        return tipoMoto;
+    public int getIdTipoMoto() {
+        return idTipoMoto;
     }
 
-    public void setTipoMoto(String tipoMoto) {
-        this.tipoMoto = tipoMoto;
+    public void setIdTipoMoto(int idTipoMoto) {
+        this.idTipoMoto = idTipoMoto;
     }
 
     public LocalDate getFechaCreacion() {
@@ -75,7 +75,7 @@ public abstract class Motocicleta implements Testeable {
     @Override
     public String toString() {
         return "Motocicleta{" + "idMotocicleta=" + idMotocicleta 
-                + ", marca=" + marca + ", tipoMoto=" + tipoMoto 
+                + ", marca=" + idMarca + ", tipoMoto=" + idTipoMoto 
                 + ", fechaCreacion=" + fechaCreacion 
                 + ", componentes=" + componentes + '}';
     } 

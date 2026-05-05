@@ -11,8 +11,8 @@ public class MotoTrabajo extends Motocicleta {
     public MotoTrabajo() {
     }
 
-    public MotoTrabajo(int capacidadCarga, float consumoCombustible, int idMotocicleta, String marca, String tipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
-        super(idMotocicleta, marca, tipoMoto, fechaCreacion, componentes);
+    public MotoTrabajo(int capacidadCarga, float consumoCombustible, int idMotocicleta, int idMarca, int idTipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
+        super(idMotocicleta, idMarca, idTipoMoto, fechaCreacion, componentes);
         this.capacidadCarga = capacidadCarga;
         this.consumoCombustible = consumoCombustible;
     }
