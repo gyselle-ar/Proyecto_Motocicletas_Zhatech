@@ -68,10 +68,10 @@ public class MotoTrabajo extends Motocicleta {
         }
         
         if (motor.equalsIgnoreCase("") && ruedas.equalsIgnoreCase("")) {
-            return new Reporte(0, idMotocicleta, "Descripción", "Resultado");
+            return new Reporte(0, idMotocicleta, "Descripción");
         }
         
-        return new Reporte(0, idMotocicleta, "Descripción general", "Resultado general");
+        return new Reporte(0, idMotocicleta, "Descripción general");
     }
 
     @Override

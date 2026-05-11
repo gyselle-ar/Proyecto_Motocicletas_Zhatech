@@ -69,7 +69,7 @@ public abstract class Motocicleta implements Testeable {
 
     @Override
     public Reporte generarReporte() {
-        return new Reporte(0, idMotocicleta, "", "");
+        return new Reporte(0, idMotocicleta, "");
     }
 
     @Override
