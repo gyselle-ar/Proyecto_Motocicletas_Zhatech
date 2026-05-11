@@ -6,16 +6,14 @@ public class Reporte {
     private int id;
     private int idMotocicleta;
     private String descripcion;
-    private String resultado;
 
     public Reporte() {
     }
 
-    public Reporte(int id, int idMotocicleta, String descripcion, String resultado) {
+    public Reporte(int id, int idMotocicleta, String descripcion) {
         this.id = id;
         this.idMotocicleta = idMotocicleta;
         this.descripcion = descripcion;
-        this.resultado = resultado;
     }
 
     public int getId() {
@@ -42,17 +40,9 @@ public class Reporte {
         this.descripcion = descripcion;
     }
 
-    public String getResultado() {
-        return resultado;
-    }
-
-    public void setResultado(String resultado) {
-        this.resultado = resultado;
-    }
-
     @Override
     public String toString() {
         return "Reporte: " + "id=" + id + ", idMotocicleta=" + idMotocicleta 
-                + ", descripcion=" + descripcion + ", resultado=" + resultado;
+                + ", descripcion=" + descripcion;
     }   
 }
