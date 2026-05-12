@@ -23,7 +23,7 @@ public class MotocicletaDAO implements CrudSimpleInterface<Motocicleta>{
     private boolean resp;
 
     public MotocicletaDAO() {
-        this.CON = Conexion.getInstancia();;
+        this.CON = Conexion.getInstancia();
     }
 
     public MotocicletaDAO(Conexion CON) {
@@ -107,7 +107,7 @@ public class MotocicletaDAO implements CrudSimpleInterface<Motocicleta>{
         resp = false;
         
         try {
-            ps = CON.conectar().prepareStatement("DELETE FROM motocicleta WHERE idMotocicleta = ?");
+            ps = CON.conectar().prepareStatement("DELETE FROM motocicleta WHERE id_motocicleta = ?");
             ps.setInt(1, id);
             
             if (ps.executeUpdate() > 0) {
@@ -131,7 +131,7 @@ public class MotocicletaDAO implements CrudSimpleInterface<Motocicleta>{
         Motocicleta moto = null;
         
         try {
-            ps = CON.conectar().prepareStatement("SELECT FROM motocicleta WHERE idMotocicleta = ?");
+            ps = CON.conectar().prepareStatement("SELECT FROM motocicleta WHERE id_motocicleta = ?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
             
