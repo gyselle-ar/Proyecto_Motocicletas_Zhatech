@@ -42,7 +42,29 @@ public class MotoDeportiva extends Motocicleta {
     public void setTurboActivado(boolean turboActivado) {
         this.turboActivado = turboActivado;
     }
+    
+    public double calcularAerodinamica(){
+        for(Componente c : componentes){
+            if(c.getCategoria().equalsIgnoreCase("Carenaje")){
+                if(c.getNombre().contains("Honda Fireblade")){
+                    return 9.8;
+                }
+                if(c.getNombre().contains("Yamaha R6")){
+                    return 8.7;
+                }
+                if(c.getNombre().contains("Kawasaki Ninja 400")){
+                    return 7.5;
+                }
+            }
+        
+        }
+        return 5.0;
+    }
 
+    public void activarModoPista(){
+        modoPista = true;
+    }
+    
     public void activarTurbo() {
         turboActivado = true;
     }
@@ -69,6 +91,7 @@ public class MotoDeportiva extends Motocicleta {
     @Override
     public Reporte generarReporte(){
         
+        //Componentes
         String motor = "";
         String carenaje = "";
         String ruedas = "";
@@ -97,21 +120,64 @@ public class MotoDeportiva extends Motocicleta {
         }
       
         String descripcion = "Motor: " + motor 
-                            + "Carenaje: " + carenaje 
-                            + "Ruedas: " + ruedas 
-                            + "Manillar: " + manillar; 
+                            + "\nCarenaje: " + carenaje 
+                            + "\nRuedas: " + ruedas 
+                            + "\nManillar: " + manillar; 
         
         if(rendimiento >= 9){
             descripcion +=
-            "La configuración seleccionada ofrece un excelente rendimiento y estabilidad.";
+            "\n\nLa configuración deportiva seleccionada ofrece un rendimiento altamente competitivo, destacándose por su aceleración, estabilidad y comportamiento aerodinámico a altas velocidades. Los componentes elegidos favorecen una conducción agresiva y precisa, ideal para escenarios de pista y conducción de alto desempeño.";
         
         }else if(rendimiento >= 6){
             descripcion +=
-            "La motocicleta mantiene un desempeño equilibrado para distintos escenarios.";
+            "\n\nLa motocicleta mantiene un equilibrio adecuado entre velocidad, maniobrabilidad y estabilidad. La combinación de componentes permite una conducción deportiva estable tanto en recorridos urbanos como en trayectos de mayor exigencia, conservando un buen nivel de respuesta y control.";
 
         }else{
             descripcion +=
-            "Aunque la configuración es funcional, algunos componentes limitan el rendimiento general.";
+            "\n\nLa configuración seleccionada prioriza ciertos aspectos visuales y de personalización sobre el rendimiento extremo. Aunque la motocicleta conserva un comportamiento deportivo, algunos componentes limitan su estabilidad y eficiencia en condiciones de conducción de alta exigencia.";
+        }
+        
+        // Aerodinámica 
+        double aerodinamica = calcularAerodinamica();
+        
+        descripcion +=
+            "\n\nAerodinámica: " + aerodinamica;
+        
+        if(aerodinamica >= 9){
+            descripcion +=
+            "\nLa configuración favorece una conducción altamente eficiente en velocidad y estabilidad aerodinámica.";
+        
+        }else if(aerodinamica >= 8){
+            descripcion +=
+            "\nLa motocicleta mantiene un excelente equilibrio aerodinámico en escenarios deportivos.";
+
+        }else{
+            descripcion +=
+            "\nLa configuración proporciona un desempeño estable para escenarios deportivos moderados.";
+        }
+        
+        //Turbo
+        descripcion +=
+                "\n\nTurbo activado: " + turboActivado;
+        
+        if (turboActivado) {
+            descripcion +=
+            "\nLa activación del turbo permite una respuesta más explosiva y una aceleración superior en altas revoluciones.";
+        }else{
+            descripcion +=
+            "\nLa motocicleta mantiene una entrega de potencia equilibrada y controlada.";
+        }
+        
+        // Modo Pista
+        descripcion +=
+                "\n\nModo pista: " + modoPista;
+        
+        if (modoPista) {
+            descripcion +=
+            "\nEl modo pista optimiza el comportamiento de la motocicleta para obtener un rendimiento más competitivo y agresivo.";
+        }else{
+            descripcion +=
+            "\nLa configuración prioriza una conducción equilibrada y estable para distintos entornos.";
         }
  
         return new Reporte(0, idMotocicleta, descripcion);
