@@ -3,38 +3,120 @@ package presentacion;
 import java.awt.Color;
 import java.awt.Graphics;
 
-
 public class FrmPrincipal extends javax.swing.JFrame {
 
+    private final javax.swing.ImageIcon iconoOriginal = new javax.swing.ImageIcon(
+            getClass().getResource("/presentacion/imagenes/fondo_Principal.jpg"));
 
     public FrmPrincipal() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+
+        getContentPane().setLayout(new java.awt.BorderLayout());
+        getContentPane().add(Escritorio, java.awt.BorderLayout.CENTER);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowOpened(java.awt.event.WindowEvent e) {
+                ajustarFondo();
+                ajustarBotones();
+
+                // Hace los botones invisibles pero funcionales
+                for (java.awt.Component c : Escritorio.getComponents()) {
+                    if (c instanceof javax.swing.JButton) {
+                        javax.swing.JButton btn = (javax.swing.JButton) c;
+                        btn.setOpaque(false);
+                        btn.setContentAreaFilled(false);
+                        btn.setBorderPainted(false);
+                        btn.setFocusPainted(false);
+                        btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    }
+                }
+
+            }
+
+        });
+
+        Escritorio.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                ajustarFondo();
+                ajustarBotones();
+
+            }
+        });
+
+        setIconImage(new javax.swing.ImageIcon(
+        getClass().getResource("/presentacion/imagenes/icono_Ventana.png")
+        ).getImage());
+        
+        
+        
+        
     }
 
-    
+    private void ajustarFondo() {
+
+        int ancho = Escritorio.getWidth();
+        int alto = Escritorio.getHeight();
+        if (ancho == 0 || alto == 0) {
+            return;
+        }
+
+        java.awt.Image img = iconoOriginal.getImage()
+                .getScaledInstance(ancho, alto, java.awt.Image.SCALE_SMOOTH);
+
+        lbFondo.setIcon(new javax.swing.ImageIcon(img));
+        lbFondo.setBounds(0, 0, ancho, alto);
+        Escritorio.moveToBack(lbFondo);
+
+    }
+
+    private void ajustarBotones() {
+
+        int ancho = Escritorio.getWidth();
+        int alto = Escritorio.getHeight();
+        if (ancho == 0 || alto == 0) {
+            return;
+        }
+
+        int btnAncho = (int) (ancho * 0.22);
+        int btnAlto = (int) (alto * 0.08);
+        int btnX = (int) (ancho * 0.06);
+
+        btnCrearMoto.setBounds(btnX, (int) (alto * 0.28), btnAncho, btnAlto);
+        btnReporte.setBounds(btnX, (int) (alto * 0.44), btnAncho, btnAlto);
+        btnHistorial.setBounds(btnX, (int) (alto * 0.61), btnAncho, btnAlto);
+        btnSalir.setBounds(btnX, (int) (alto * 0.78), btnAncho, btnAlto);
+        btnEasterEgg.setBounds((int) (ancho * 0.48), (int) (alto * 0.16), 30, 30);
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
+        jButton1 = new javax.swing.JButton();
         Escritorio = new javax.swing.JDesktopPane(){
 
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.setColor(Color.cyan);
+                g.setColor(Color.white);
                 g.fillRect(0, 0, getWidth(), getHeight());
 
             }
 
         }
         ;
+        lbFondo = new javax.swing.JLabel();
         btnCrearMoto = new javax.swing.JButton();
-        btnVerMotosCreadas = new javax.swing.JButton();
-        btnVerReportes = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnReporte = new javax.swing.JButton();
+        btnHistorial = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+        btnEasterEgg = new javax.swing.JButton();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ZhaTech : Simulador de Motocicletas");
@@ -42,75 +124,109 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         Escritorio.setName(""); // NOI18N
 
-        btnCrearMoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/crear_moto.png"))); // NOI18N
-        btnCrearMoto.setText("Crear Moto");
-        btnCrearMoto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/fondo_Principal.jpg"))); // NOI18N
+        Escritorio.add(lbFondo);
+        lbFondo.setBounds(0, 0, 1010, 550);
+
         btnCrearMoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearMotoActionPerformed(evt);
             }
         });
         Escritorio.add(btnCrearMoto);
-        btnCrearMoto.setBounds(10, 60, 140, 50);
+        btnCrearMoto.setBounds(60, 140, 220, 60);
 
-        btnVerMotosCreadas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/historial_motos.png"))); // NOI18N
-        btnVerMotosCreadas.setText("Motos Creadas");
-        btnVerMotosCreadas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnVerMotosCreadas.addActionListener(new java.awt.event.ActionListener() {
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerMotosCreadasActionPerformed(evt);
+                btnReporteActionPerformed(evt);
             }
         });
-        Escritorio.add(btnVerMotosCreadas);
-        btnVerMotosCreadas.setBounds(10, 220, 170, 50);
+        Escritorio.add(btnReporte);
+        btnReporte.setBounds(60, 240, 220, 60);
 
-        btnVerReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/repotes_moto.png"))); // NOI18N
-        btnVerReportes.setText("Ver Reportes");
-        btnVerReportes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Escritorio.add(btnVerReportes);
-        btnVerReportes.setBounds(10, 140, 160, 50);
+        btnHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistorialActionPerformed(evt);
+            }
+        });
+        Escritorio.add(btnHistorial);
+        btnHistorial.setBounds(60, 320, 220, 60);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/salida.png"))); // NOI18N
-        jButton2.setText("Salida");
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Escritorio.add(jButton2);
-        jButton2.setBounds(10, 300, 150, 50);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        Escritorio.add(btnSalir);
+        btnSalir.setBounds(60, 410, 220, 60);
+
+        btnEasterEgg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEasterEggActionPerformed(evt);
+            }
+        });
+        Escritorio.add(btnEasterEgg);
+        btnEasterEgg.setBounds(490, 100, 30, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Escritorio, javax.swing.GroupLayout.PREFERRED_SIZE, 994, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(Escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Escritorio, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(Escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearMotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearMotoActionPerformed
-
-        FrmCrearMoto frm = new FrmCrearMoto ();
+        FrmCrearMoto frm = new FrmCrearMoto();
         Escritorio.add(frm);
         frm.setVisible(true);
-
     }//GEN-LAST:event_btnCrearMotoActionPerformed
 
-    private void btnVerMotosCreadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerMotosCreadasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVerMotosCreadasActionPerformed
+    private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
+        FrmHistorial frm = new FrmHistorial();
+        Escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnHistorialActionPerformed
+
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        FrmReporte frm = new FrmReporte();
+        Escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnReporteActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+    
+    int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+        this,
+        "¿Estás seguro que deseas salir?",
+        "Cerrar aplicación",
+        javax.swing.JOptionPane.YES_NO_OPTION,
+        javax.swing.JOptionPane.QUESTION_MESSAGE
+    );
+    
+    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+        System.exit(0);
+    }
+
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnEasterEggActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEasterEggActionPerformed
+        FrmUsuario frm = new FrmUsuario();
+        Escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnEasterEggActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new FrmPrincipal().setVisible(true);
@@ -121,12 +237,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JButton btnCrearMoto;
-    private javax.swing.JButton btnVerMotosCreadas;
-    private javax.swing.JButton btnVerReportes;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnEasterEgg;
+    private javax.swing.JButton btnHistorial;
+    private javax.swing.JButton btnReporte;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel lbFondo;
     // End of variables declaration//GEN-END:variables
 
 }
-
