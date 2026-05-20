@@ -3,10 +3,12 @@ package datos;
 
 import database.Conexion;
 import datos.interfaces.CrudSimpleInterface;
+import entidades.Marca;
 import entidades.MotoCruiser;
 import entidades.MotoDeportiva;
 import entidades.MotoTrabajo;
 import entidades.Motocicleta;
+import entidades.TipoMoto;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,8 +58,12 @@ public class MotocicletaDAO implements CrudSimpleInterface<Motocicleta>{
                 }
                 
                 moto.setIdMotocicleta(rs.getInt(1));
-                moto.setIdMarca(rs.getInt(2));
-                moto.setIdTipoMoto(rs.getInt(3));
+                Marca marca = new Marca();
+                marca.setIdMarca(rs.getInt(2));
+                moto.setMarca(marca);
+                TipoMoto tipo = new TipoMoto();
+                tipo.setIdTipoMoto(rs.getInt(3));
+                moto.setTipoMoto(tipo);
                 moto.setFechaCreacion(rs.getDate(4).toLocalDate());
                 
                 listaMotos.add(moto);
@@ -82,8 +88,8 @@ public class MotocicletaDAO implements CrudSimpleInterface<Motocicleta>{
         try {
             ps = CON.conectar().prepareStatement("INSERT INTO motocicleta (id_marca, id_tipo_moto, fecha_creacion) values (?,?,?)");
             
-            ps.setInt(1, obj.getIdMarca());
-            ps.setInt(2, obj.getIdTipoMoto());
+            ps.setInt(1, obj.getMarca().getIdMarca());
+            ps.setInt(2, obj.getTipoMoto().getIdTipoMoto());
             ps.setDate(3, java.sql.Date.valueOf(obj.getFechaCreacion()));
             
             if (ps.executeUpdate() > 0) {
@@ -151,8 +157,12 @@ public class MotocicletaDAO implements CrudSimpleInterface<Motocicleta>{
                     }
                 
                     moto.setIdMotocicleta(rs.getInt(1));
-                    moto.setIdMarca(rs.getInt(2));
-                    moto.setIdTipoMoto(rs.getInt(3));
+                    Marca marca = new Marca();
+                    marca.setIdMarca(rs.getInt(2));
+                    moto.setMarca(marca);
+                    TipoMoto tipo = new TipoMoto();
+                    tipo.setIdTipoMoto(rs.getInt(3));
+                    moto.setTipoMoto(tipo);
                     moto.setFechaCreacion(rs.getDate(4).toLocalDate());
                 }  
             ps.close();

@@ -24,20 +24,40 @@ public class Componente {
         return idComponente;
     }
 
+    public void setIdComponente(int idComponente) {
+        this.idComponente = idComponente;
+    }
+
     public String getNombre() {
         return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getCategoria() {
         return categoria;
     }
 
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     public TipoMoto getTipoMoto() {
         return tipoMoto;
     }
 
+    public void setTipoMoto(TipoMoto tipoMoto) {
+        this.tipoMoto = tipoMoto;
+    }
+
     public Marca getMarca() {
         return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
     @Override

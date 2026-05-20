@@ -73,4 +73,41 @@ public class MarcaDAO implements CrudSimpleInterface<Marca>{
         throw new UnsupportedOperationException("No es necesario."); 
     }
     
+    public List<Marca> listarPorTipoMoto(int idTipoMoto) {
+        List<Marca> lista = new ArrayList();
+        
+        try {
+            ps = CON.conectar().prepareStatement(
+                    "SELECT m.id_marca, m.nombre " +
+                    "FROM marca m " +
+                    "INNER JOIN tipo_moto_marca tmm " +
+                    "ON m.id_marca = tmm.id_marca " +
+                    "WHERE tmm.id_tipo_moto = ?");
+            
+            ps.setInt(1, idTipoMoto);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                
+                Marca marca = new Marca();
+                
+                marca.setIdMarca(rs.getInt(1));
+                marca.setNombre(rs.getString(2));
+
+                lista.add(marca);
+            }
+            ps.close();
+            rs.close();
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            
+        } finally{
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return lista;
+    }
+    
 }
