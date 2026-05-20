@@ -108,13 +108,13 @@ public class MotocicletaDAO implements CrudSimpleInterface<Motocicleta>{
     }
 
     @Override
-    public boolean eliminar(int id) {
+    public boolean eliminar(int idMotocicleta) {
         
         resp = false;
         
         try {
             ps = CON.conectar().prepareStatement("DELETE FROM motocicleta WHERE id_motocicleta = ?");
-            ps.setInt(1, id);
+            ps.setInt(1, idMotocicleta);
             
             if (ps.executeUpdate() > 0) {
                 resp = true;
@@ -132,13 +132,13 @@ public class MotocicletaDAO implements CrudSimpleInterface<Motocicleta>{
     }
 
     @Override
-    public Motocicleta buscarPorId(int id) {
+    public Motocicleta buscarPorId(int idMotocicleta) {
         
         Motocicleta moto = null;
         
         try {
             ps = CON.conectar().prepareStatement("SELECT FROM motocicleta WHERE id_motocicleta = ?");
-            ps.setInt(1, id);
+            ps.setInt(1, idMotocicleta);
             rs = ps.executeQuery();
             
                 if (rs.next()) {

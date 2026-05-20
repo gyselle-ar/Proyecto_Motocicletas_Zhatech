@@ -18,7 +18,7 @@ public class MarcaDAO implements CrudSimpleInterface<Marca>{
     private PreparedStatement ps;
     private ResultSet rs;
     private boolean resp;
-
+    
     public MarcaDAO() {
         this.CON = Conexion.getInstancia();
     }

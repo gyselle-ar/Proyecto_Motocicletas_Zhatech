@@ -166,4 +166,27 @@ public class ReporteDAO implements CrudSimpleInterface<Reporte>{
         return reporte;
     }
     
+    public boolean eliminarPorMoto(int idMotocicleta) {
+
+         boolean resp = false;
+         
+        try {
+            ps = CON.conectar().prepareStatement("DELETE FROM reporte WHERE id_motocicleta = ?");
+            ps.setInt(1, idMotocicleta);
+            
+            if (ps.executeUpdate() > 0) {
+                resp = true;
+            }
+            ps.close();
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            
+        } finally {
+            ps = null;
+            CON.desconectar();
+        }
+        return resp;
+    }
+    
 }
