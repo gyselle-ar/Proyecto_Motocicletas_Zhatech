@@ -12,8 +12,8 @@ public class MotoDeportiva extends Motocicleta {
     public MotoDeportiva() {
     }
 
-    public MotoDeportiva(double aerodinamica, boolean modoPista, boolean turboActivado, int idMotocicleta, int idMarca, int idTipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
-        super(idMotocicleta, idMarca, idTipoMoto, fechaCreacion, componentes);
+    public MotoDeportiva(double aerodinamica, boolean modoPista, boolean turboActivado, int idMotocicleta, Marca marca, TipoMoto tipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
+        super(idMotocicleta, marca, tipoMoto, fechaCreacion, componentes);
         this.aerodinamica = aerodinamica;
         this.modoPista = modoPista;
         this.turboActivado = turboActivado;

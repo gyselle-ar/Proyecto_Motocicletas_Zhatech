@@ -136,4 +136,34 @@ public class ReporteDAO implements CrudSimpleInterface<Reporte>{
         return reporte;
     }
     
+    public Reporte buscarPorMoto(int idMotocicleta) {
+        Reporte reporte = null;
+        
+        try {
+            ps = CON.conectar().prepareStatement("SELECT FROM reporte WHERE id_motocicleta = ?");
+            ps.setInt(1, idMotocicleta);
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                reporte = new Reporte();
+                
+                reporte.setId(rs.getInt(1));
+                reporte.setIdMotocicleta(rs.getInt(2));
+                reporte.setDescripcion(rs.getString(3));
+            }
+                 
+            ps.close();
+            rs.close();
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            
+        } finally{
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return reporte;
+    }
+    
 }
