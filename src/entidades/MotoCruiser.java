@@ -12,10 +12,11 @@ public class MotoCruiser extends Motocicleta {
     public MotoCruiser() {
     }
 
-    public MotoCruiser(String ergonomiaPostura, double volumenSonidoEscape, int idMotocicleta, int idMarca, int idTipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
-        super(idMotocicleta, idMarca, idTipoMoto, fechaCreacion, componentes);
+    public MotoCruiser(String ergonomiaPostura, double volumenSonidoEscape, boolean testConfortActivado, int idMotocicleta, Marca marca, TipoMoto tipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
+        super(idMotocicleta, marca, tipoMoto, fechaCreacion, componentes);
         this.ergonomiaPostura = ergonomiaPostura;
         this.volumenSonidoEscape = volumenSonidoEscape;
+        this.testConfortActivado = testConfortActivado;
     }
 
     public String getErgonomiaPostura() {

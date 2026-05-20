@@ -35,7 +35,5 @@ public class Marca {
     public String toString() {
         return "Marca{" + "idMarca=" + idMarca + ", nombre=" + nombre + '}';
     }
-    
-    
-    
+   
 }
