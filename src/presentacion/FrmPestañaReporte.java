@@ -1,24 +1,23 @@
-
 package presentacion;
 
-/**
- *
- * @author carlo
- */
+import entidades.Reporte;
+import negocio.ReporteControl;
+
+
 public class FrmPestañaReporte extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form FrmPestañaRegistro
-     */
-    public FrmPestañaReporte() {
-        initComponents();
-        
-         setFrameIcon(new javax.swing.ImageIcon(
-            getClass().getResource("/presentacion/imagenes/icono_Ventana.png")));
+    private int idMotocicleta;
     
+
+    public FrmPestañaReporte(String reporte) {
+        initComponents();
+
+        setFrameIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/presentacion/imagenes/icono_Ventana.png")));
+
     }
 
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

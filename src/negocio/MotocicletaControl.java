@@ -1,4 +1,3 @@
-
 package negocio;
 
 import datos.DetalleConfiguracionDAO;
@@ -17,9 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-
 public class MotocicletaControl {
-    
+
     private final MotocicletaDAO DATOS;
     private Motocicleta obj;
     private DefaultTableModel modeloTabla;
@@ -34,33 +32,32 @@ public class MotocicletaControl {
         this.DETALLECONFI = new DetalleConfiguracionDAO();
         this.CONTROLREPORTE = new ReporteControl();
     }
-    
-    public DefaultTableModel listar(){
+
+    public DefaultTableModel listar() {
         List<Motocicleta> lista = new ArrayList<>();
         lista.addAll(DATOS.listar());
-        
-        String[] titulos = {"Id" , "Marca", "Tipo", "Fecha", "Reporte"};
+
+        String[] titulos = {"Id", "Marca", "Tipo", "Fecha", "Reporte"};
         this.modeloTabla = new DefaultTableModel(null, titulos);
-        
-        
+
         String[] registro = new String[5];
         this.motosCreadas = 0;
-        
-        for(Motocicleta item: lista){
-            
+
+        for (Motocicleta item : lista) {
+
             registro[0] = String.valueOf(item.getIdMotocicleta());
             registro[1] = item.getMarca().getNombre();
             registro[2] = item.getTipoMoto().getNombre();
             registro[3] = item.getFechaCreacion().toString();
             registro[4] = "Ver reporte";
-            
+
             this.modeloTabla.addRow(registro);
-            this.motosCreadas = this.motosCreadas +1;
+            this.motosCreadas = this.motosCreadas + 1;
         }
         return this.modeloTabla;
     }
-     
-    public String guardar(Marca marca, TipoMoto tipoMoto, LocalDate fechaCreacion){
+
+    public String guardar(Marca marca, TipoMoto tipoMoto, LocalDate fechaCreacion) {
         switch (tipoMoto.getIdTipoMoto()) {
             case 1:
                 obj = new MotoDeportiva();
@@ -72,67 +69,89 @@ public class MotocicletaControl {
                 obj = new MotoCruiser();
                 break;
         }
-        
+
         obj.setMarca(marca);
         obj.setTipoMoto(tipoMoto);
         obj.setFechaCreacion(fechaCreacion);
-        
+
         if (DATOS.guardar(obj)) {
-                this.motosCreadas ++;
-                return "Moto creada con éxito.";
-            }else{
-                return "Error en la creación.";
-            }
+            this.motosCreadas++;
+            return "Moto creada con éxito.";
+        } else {
+            return "Error en la creación.";
+        }
     }
-    
-    public String eliminar(int idMotocicleta){
+
+    public String eliminar(int idMotocicleta) {
         DETALLECONFI.eliminarPorMoto(idMotocicleta);
         CONTROLREPORTE.eliminarPorMoto(idMotocicleta);
 
-        if(DATOS.eliminar(idMotocicleta)){
+        if (DATOS.eliminar(idMotocicleta)) {
             this.motosCreadas--;
             return "Motocicleta eliminada correctamente.";
         }
 
         return "Error al eliminar motocicleta.";
     }
-    
-    public int getMotosCreadas(){
+
+    public int getMotosCreadas() {
         return this.motosCreadas;
     }
-    
-    public Motocicleta buscarPorId(int id){
+
+    public Motocicleta buscarPorId(int id) {
         return DATOS.buscarPorId(id);
     }
-    
-    public String crearMoto(Marca marca, TipoMoto tipoMoto, LocalDate fechaCreacion, List<Componente> componentes){
-    
+
+    public String crearMoto(Marca marca, TipoMoto tipoMoto, LocalDate fechaCreacion, List<Componente> componentes, boolean turboActivado, boolean modoPista) {
+
         ValidadorCompatibilidad validador = new ValidadorCompatibilidad();
-        
+
         for (int i = 0; i < componentes.size(); i++) {
             for (int j = i + 1; j < componentes.size(); j++) {
                 String resultado = validador.validarCompatibilidad(componentes.get(i).getNombre(), componentes.get(j).getNombre());
-                
+
                 if (!resultado.equals("Componentes Compatibles")) {
                     return resultado;
                 }
             }
         }
-        
-        String resultadoMoto = this.guardar(marca, tipoMoto, fechaCreacion);
-        if (!resultadoMoto.equals("Moto creada con éxito.")) {
-            return resultadoMoto;
+
+        Motocicleta obj = null;
+
+        if (tipoMoto.getNombre().equalsIgnoreCase("Deportiva")) {
+            obj = new MotoDeportiva();
+        } else if (tipoMoto.getNombre().equalsIgnoreCase("Cruiser")) {
+            obj = new MotoCruiser();
+        } else if (tipoMoto.getNombre().equalsIgnoreCase("Trabajo")) {
+            obj = new MotoTrabajo();
         }
-        
+
+        if (obj instanceof MotoDeportiva) {
+
+            MotoDeportiva motoDep = (MotoDeportiva) obj;
+
+            motoDep.setTurboActivado(turboActivado);
+            motoDep.setModoPista(modoPista);
+        }
+
+        obj.setMarca(marca);
+        obj.setTipoMoto(tipoMoto);
+        obj.setFechaCreacion(fechaCreacion);
+        obj.setComponentes(componentes);
+        DATOS.guardar(obj);
+
+        obj.setComponentes(componentes);
+
         for (Componente componente : componentes) {
             DETALLECONFI.guardarDetalleConfiguracion(obj.getIdMotocicleta(), componente.getIdComponente());
         }
-        
+
         Reporte reporte = obj.generarReporte();
+
+        reporte.setMotocicleta(obj);
         CONTROLREPORTE.guardar(reporte);
-        
+
         return "Motocicleta creada con éxito.";
     }
-    
-    
+
 }

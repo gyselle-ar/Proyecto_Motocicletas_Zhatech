@@ -11,16 +11,16 @@ public class ValidadorCompatibilidad {
         List<String> incompatibles = new ArrayList<>();
 
         incompatibles.add(
-            "Harley-Davidson Milwaukee#Kawasaki Ninja 400#El motor Harley-Davidson Milwaukee es incompatible con el carenaje Kawasaki Ninja 400.");
+            "Honda Fireblade#Yamaha MT Series#El carenaje Honda Fireblade es incompatible con el manillar Yamaha MT Series.");
 
         incompatibles.add(
-            "Kawasaki Ninja H2#Harley-Davidson Ape Hanger#El motor Kawasaki Ninja H2 es incompatible con el manillar Harley-Davidson Ape Hanger.");
+            "Yamaha Crossplane#Honda CBR600RR#El motor Yamaha Crossplane es incompatible con la rueda Honda CBR600RR.");
         
         incompatibles.add(
-            "TVS Apache RTR#Harley-Davidson Fat Boy#El motor TVS Apache RTR es incompatible con la rueda Harley-Davidson Fat Boy.");
+            "Kawasaki Ninja 400#Honda VTEC#El carenaje Kawasaki Ninja 400 es incompatible con el manillar Honda VTEC.");
         
         incompatibles.add(
-            "Honda Fireblade#Victory High Ball#El carenaje Honda Fireblade es incompatible con el manillar Victory High Ball.");
+            "Honda Fireblade#Yamaha MT Series#El carenaje Honda Fireblade es incompatible con el manillar Victory High Ball.");
         
         incompatibles.add(
             "Indian Thunderstroke 111#Bajaj Pulsar RS200#El motor Indian Thunderstroke 111 es incompatible con el carenaje Bajaj Pulsar RS200.");
@@ -36,14 +36,12 @@ public class ValidadorCompatibilidad {
         
         incompatibles.add(
             "Yamaha Crossplane#Indian Chief Dark Horse#El motor Yamaha Crossplane es incompatible con la rueda Indian Chief Dark Horse.");
-        
-        incompatibles.add(
-            "Panigale-Manillar Básico-El componente Panigale es incompatible con el manillar básico.");
 
-        String combinacion = componente1 + "#" + componente2;
+        String combinacion1 = componente1.trim().toLowerCase() + "#" + componente2.trim().toLowerCase();
+        String combinacion2 = componente2.trim().toLowerCase() + "#" + componente1.trim().toLowerCase();
 
         for(String i : incompatibles){
-            if(i.contains(combinacion)){
+            if(i.toLowerCase().contains(combinacion1) || i.toLowerCase().contains(combinacion2)){
                 return i.split("#", 3)[2];
             }
         }

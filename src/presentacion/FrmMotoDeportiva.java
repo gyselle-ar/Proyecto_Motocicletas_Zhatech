@@ -1,15 +1,41 @@
 
 package presentacion;
 
+import entidades.Componente;
+import entidades.Marca;
+import entidades.MotoDeportiva;
+import entidades.TipoMoto;
+import entidades.ValidadorCompatibilidad;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import negocio.ComponenteControl;
+import negocio.MarcaControl;
+import negocio.MotocicletaControl;
+
 
 public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
 
    private final javax.swing.ImageIcon iconoOriginal = new javax.swing.ImageIcon(
         getClass().getResource("/presentacion/imagenes/fondo_CrearDeportiva.png"));
  
+    private final MarcaControl CONTROLMARCA;
+    private final ComponenteControl CONTROLCOMPONENTE;
+    private final MotocicletaControl CONTROLMOTO;
+    private MotoDeportiva moto;
+   
     public FrmMotoDeportiva() {
         initComponents();
- 
+       
+        CONTROLMARCA = new MarcaControl();
+        CONTROLCOMPONENTE = new ComponenteControl();
+        CONTROLMOTO = new MotocicletaControl();
+        moto = new MotoDeportiva();
+        
+        cargarMarcas();
+        cargarComponentes();
+        
         try {
             setMaximum(true);
         } catch (java.beans.PropertyVetoException e) {
@@ -53,6 +79,47 @@ public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
         hacerBotonesInvisibles();
     }
  
+    private void cargarMarcas() {
+        cmbMarca.removeAllItems();
+        List<Marca> lista = CONTROLMARCA.listarPorTipoMoto(1);
+
+        for(Marca item : lista){
+            cmbMarca.addItem(item);
+        }
+    }
+    
+    private void cargarComponentes() {
+
+        cmbMotor.removeAllItems();
+        cmbRueda.removeAllItems();
+        cmbManillar.removeAllItems();
+        cmbCarenaje.removeAllItems();
+
+        List<Componente> lista = CONTROLCOMPONENTE.listarPorTipoMoto(1);
+
+        for(Componente item : lista){
+
+            switch(item.getCategoria()){
+
+            case "Motor":
+                cmbMotor.addItem(item);
+                break;
+
+            case "Rueda":
+                cmbRueda.addItem(item);
+                break;
+
+            case "Manillar":
+                cmbManillar.addItem(item);
+                break;
+
+            case "Carenaje":
+                cmbCarenaje.addItem(item);
+                break;
+        }
+    }
+}
+    
     private void ajustarComponentes(javax.swing.JPanel panel) {
         int ancho = panel.getWidth();
         int alto  = panel.getHeight();
@@ -154,11 +221,17 @@ public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(txtValidacionCom, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 190, 300, 120));
+
+        btnActivarTurbo.addActionListener(this::btnActivarTurboActionPerformed);
         jPanel1.add(btnActivarTurbo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 430, 330, 50));
+
+        btnModoPista.addActionListener(this::btnModoPistaActionPerformed);
         jPanel1.add(btnModoPista, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 490, 330, 50));
 
         btnCrearMoto_Reporte.addActionListener(this::btnCrearMoto_ReporteActionPerformed);
         jPanel1.add(btnCrearMoto_Reporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 550, 250, 60));
+
+        btnValidarCom.addActionListener(this::btnValidarComActionPerformed);
         jPanel1.add(btnValidarCom, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 320, 300, 50));
 
         cmbMotor.setBackground(new java.awt.Color(43, 47, 54));
@@ -199,7 +272,29 @@ public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearMoto_ReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearMoto_ReporteActionPerformed
-        // TODO add your handling code here:
+        Marca marca = (Marca) cmbMarca.getSelectedItem();
+
+        TipoMoto tipoMoto = new TipoMoto();
+        tipoMoto.setIdTipoMoto(1);
+        tipoMoto.setNombre("Deportiva");
+
+        LocalDate fecha = LocalDate.now();
+
+        Componente motor = (Componente) cmbMotor.getSelectedItem();
+        Componente rueda = (Componente) cmbRueda.getSelectedItem();
+        Componente manillar = (Componente) cmbManillar.getSelectedItem();
+        Componente carenaje = (Componente) cmbCarenaje.getSelectedItem();
+
+        List<Componente> componentes = new ArrayList<>();
+
+        componentes.add(motor);
+        componentes.add(rueda);
+        componentes.add(manillar);
+        componentes.add(carenaje);
+
+        String resultado = CONTROLMOTO.crearMoto(marca, tipoMoto, fecha, componentes, moto.isTurboActivado(), moto.isModoPista());
+
+    JOptionPane.showMessageDialog(this, resultado);
     }//GEN-LAST:event_btnCrearMoto_ReporteActionPerformed
 
     private void cmbMotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMotorActionPerformed
@@ -210,17 +305,60 @@ public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbManillarActionPerformed
 
+    private void btnValidarComActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarComActionPerformed
+        Componente motor = (Componente) cmbMotor.getSelectedItem();
+        Componente rueda = (Componente) cmbRueda.getSelectedItem();
+        Componente manillar = (Componente) cmbManillar.getSelectedItem();
+        Componente carenaje = (Componente) cmbCarenaje.getSelectedItem();
+
+        List<Componente> componentes = new ArrayList<>();
+
+        componentes.add(motor);
+        componentes.add(rueda);
+        componentes.add(manillar);
+        componentes.add(carenaje);
+
+        ValidadorCompatibilidad validador = new ValidadorCompatibilidad();
+
+        for (int i = 0; i < componentes.size(); i++) {
+            for (int j = i + 1; j < componentes.size(); j++) {
+
+            String resultado = validador.validarCompatibilidad(
+                    componentes.get(i).getNombre(),
+                    componentes.get(j).getNombre()
+            );
+
+            if (!resultado.equals("Componentes Compatibles")) {
+                JOptionPane.showMessageDialog(this, resultado);
+                return;
+            }
+        }
+    }
+
+    JOptionPane.showMessageDialog(this, "Todos los componentes son compatibles");
+    }//GEN-LAST:event_btnValidarComActionPerformed
+
+    private void btnActivarTurboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarTurboActionPerformed
+        moto.setTurboActivado(true);
+        JOptionPane.showMessageDialog(null, "Turbo activado");
+    }//GEN-LAST:event_btnActivarTurboActionPerformed
+
+    private void btnModoPistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModoPistaActionPerformed
+        moto.setModoPista(true);
+        JOptionPane.showMessageDialog(null, "Modo Pista activado");
+    }//GEN-LAST:event_btnModoPistaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActivarTurbo;
     private javax.swing.JButton btnCrearMoto_Reporte;
     private javax.swing.JButton btnModoPista;
     private javax.swing.JButton btnValidarCom;
-    private javax.swing.JComboBox<String> cmbCarenaje;
-    private javax.swing.JComboBox<String> cmbManillar;
-    private javax.swing.JComboBox<String> cmbMarca;
-    private javax.swing.JComboBox<String> cmbMotor;
-    private javax.swing.JComboBox<String> cmbRueda;
+    private javax.swing.JComboBox<Componente> cmbCarenaje;
+    private javax.swing.JComboBox<Componente> cmbManillar;
+    private javax.swing.JComboBox<Marca> cmbMarca;
+    private javax.swing.JComboBox<Componente> cmbMotor;
+    private javax.swing.JComboBox<Componente> cmbRueda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel txtValidacionCom;

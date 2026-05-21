@@ -58,6 +58,7 @@ public class ComponenteDAO implements CrudSimpleInterface<Componente>{
                     "ON c.id_componente = tmc.id_componente " +
                     "WHERE tmc.id_tipo_moto = ?");
             
+            ps.setInt(1, idTipoMoto);
             rs = ps.executeQuery();
             
             while(rs.next()){

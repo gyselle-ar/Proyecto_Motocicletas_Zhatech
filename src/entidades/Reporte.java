@@ -6,6 +6,7 @@ public class Reporte {
     private int id;
     private int idMotocicleta;
     private String descripcion;
+    private Motocicleta motocicleta;
 
     public Reporte() {
     }
@@ -39,6 +40,15 @@ public class Reporte {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    public Motocicleta getMotocicleta() {
+        return motocicleta;
+    }
+
+    public void setMotocicleta(Motocicleta motocicleta) {
+        this.motocicleta = motocicleta;
+    }
+    
 
     @Override
     public String toString() {

@@ -126,15 +126,25 @@ public class MotoDeportiva extends Motocicleta {
         
         if(rendimiento >= 9){
             descripcion +=
-            "\n\nLa configuración deportiva seleccionada ofrece un rendimiento altamente competitivo, destacándose por su aceleración, estabilidad y comportamiento aerodinámico a altas velocidades. Los componentes elegidos favorecen una conducción agresiva y precisa, ideal para escenarios de pista y conducción de alto desempeño.";
+            "\n\nLa configuración deportiva seleccionada ofrece un rendimiento "
+                    + "altamente competitivo, destacándose por su aceleración, "
+                    + "estabilidad y comportamiento aerodinámico a altas velocidades. "
+                    + "Los componentes elegidos favorecen una conducción agresiva y precisa, "
+                    + "ideal para escenarios de pista y conducción de alto desempeño.";
         
         }else if(rendimiento >= 6){
             descripcion +=
-            "\n\nLa motocicleta mantiene un equilibrio adecuado entre velocidad, maniobrabilidad y estabilidad. La combinación de componentes permite una conducción deportiva estable tanto en recorridos urbanos como en trayectos de mayor exigencia, conservando un buen nivel de respuesta y control.";
+            "\n\nLa motocicleta mantiene un equilibrio adecuado entre velocidad, maniobrabilidad "
+                    + "y estabilidad. La combinación de componentes permite una conducción "
+                    + "deportiva estable tanto en recorridos urbanos como en trayectos de mayor exigencia, "
+                    + "conservando un buen nivel de respuesta y control.";
 
         }else{
             descripcion +=
-            "\n\nLa configuración seleccionada prioriza ciertos aspectos visuales y de personalización sobre el rendimiento extremo. Aunque la motocicleta conserva un comportamiento deportivo, algunos componentes limitan su estabilidad y eficiencia en condiciones de conducción de alta exigencia.";
+            "\n\nLa configuración seleccionada prioriza ciertos aspectos visuales y de "
+                    + "personalización sobre el rendimiento extremo. Aunque la motocicleta "
+                    + "conserva un comportamiento deportivo, algunos componentes limitan su "
+                    + "estabilidad y eficiencia en condiciones de conducción de alta exigencia.";
         }
         
         // Aerodinámica 
@@ -180,7 +190,11 @@ public class MotoDeportiva extends Motocicleta {
             "\nLa configuración prioriza una conducción equilibrada y estable para distintos entornos.";
         }
  
-        return new Reporte(0, idMotocicleta, descripcion);
+        Reporte reporte = new Reporte();
+        reporte.setDescripcion(descripcion);
+        reporte.setMotocicleta(this);
+        
+        return reporte;
     }
 
     @Override
