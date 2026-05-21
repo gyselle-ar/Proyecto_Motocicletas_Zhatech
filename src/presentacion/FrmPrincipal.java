@@ -122,7 +122,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         lbFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/fondo_Inicio.png"))); // NOI18N
         Escritorio.add(lbFondo);
-        lbFondo.setBounds(0, 0, 1010, 550);
+        lbFondo.setBounds(0, 0, 1000, 550);
 
         btnCrearMoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -60,9 +60,15 @@ public class FrmHistorial_Registro extends javax.swing.JInternalFrame {
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
  
-        // Configurar columnas
+        
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(25);
         jTable1.getColumnModel().getColumn(0).setResizable(false);
+        
+        txtBuscar.setBorder(new javax.swing.border.LineBorder(
+        java.awt.Color.GRAY,  
+        2,                     
+        true                   
+));
  
         
     }
@@ -83,8 +89,8 @@ public class FrmHistorial_Registro extends javax.swing.JInternalFrame {
  
         
         txtBuscar.setBounds(
-            (int)(ancho * 0.05),
-            (int)(alto  * 0.30),
+            (int)(ancho * 0.06),
+            (int)(alto  * 0.31),
             (int)(ancho * 0.43),
             (int)(alto  * 0.06)
         );
@@ -147,11 +153,11 @@ public class FrmHistorial_Registro extends javax.swing.JInternalFrame {
 
         pnlFondo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnBuscarReporte = new javax.swing.JButton();
         btnEliminarMoto = new javax.swing.JButton();
-        txtBuscar = new javax.swing.JTextField();
         lbMotosCreadas = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
 
@@ -166,6 +172,13 @@ public class FrmHistorial_Registro extends javax.swing.JInternalFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/fondo_Historial&Reporte.png"))); // NOI18N
         pnlFondo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, -1));
+
+        txtBuscar.setBackground(new java.awt.Color(43, 47, 54));
+        txtBuscar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        txtBuscar.setBorder(null);
+        txtBuscar.addActionListener(this::txtBuscarActionPerformed);
+        pnlFondo.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 430, 40));
 
         jTable1.setBackground(new java.awt.Color(31, 39, 68));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -189,9 +202,6 @@ public class FrmHistorial_Registro extends javax.swing.JInternalFrame {
 
         btnEliminarMoto.addActionListener(this::btnEliminarMotoActionPerformed);
         pnlFondo.add(btnEliminarMoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 220, 200, 50));
-
-        txtBuscar.addActionListener(this::txtBuscarActionPerformed);
-        pnlFondo.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 430, 40));
         pnlFondo.add(lbMotosCreadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 656, 50, 30));
 
         btnVolver.addActionListener(this::btnVolverActionPerformed);
