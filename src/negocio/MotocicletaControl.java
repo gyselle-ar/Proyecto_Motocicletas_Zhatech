@@ -101,6 +101,10 @@ public class MotocicletaControl {
     public Motocicleta buscarPorId(int id) {
         return DATOS.buscarPorId(id);
     }
+    
+    public List<Motocicleta> listarMotos(){
+        return DATOS.listar();
+    }
 
     public String crearMotoDeportiva(Marca marca, TipoMoto tipoMoto, LocalDate fechaCreacion, List<Componente> componentes, boolean turboActivado, boolean modoPista) {
 

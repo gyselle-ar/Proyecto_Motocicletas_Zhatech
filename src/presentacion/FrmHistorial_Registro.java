@@ -1,15 +1,18 @@
 package presentacion;
 
+import entidades.Motocicleta;
 import entidades.Reporte;
 import java.awt.Color;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import negocio.MotocicletaControl;
 import negocio.ReporteControl;
 
 public class FrmHistorial_Registro extends javax.swing.JInternalFrame {
 
     private final javax.swing.ImageIcon iconoOriginal = new javax.swing.ImageIcon(
-            getClass().getResource("/presentacion/imagenes/fondo_Historial&Reporte.png"));
+            getClass().getResource("/presentacion/imagenes/fondo_PestañaHistorial&Reporte.png"));
 
     private final MotocicletaControl CONTROL;
     private ReporteControl REPORTECONTROL;
@@ -82,6 +85,28 @@ public class FrmHistorial_Registro extends javax.swing.JInternalFrame {
         tablaHistorial.setForeground(Color.white);
     }
 
+    public void cargarTabla() {
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaHistorial.getModel();
+
+        modelo.setRowCount(0);
+
+        List<Motocicleta> lista = CONTROL.listarMotos();
+
+        for (Motocicleta moto : lista) {
+
+            modelo.addRow(new Object[]{
+                moto.getIdMotocicleta(),
+                moto.getMarca().getNombre(),
+                moto.getTipoMoto().getNombre(),
+                moto.getFechaCreacion(),
+                "Ver Reporte"
+            });
+        }
+
+        lbMotosCreadas.setText( String.valueOf(CONTROL.getMotosCreadas()));
+    }
+
     private void ajustarComponentes(javax.swing.JPanel panel) {
         int ancho = panel.getWidth();
         int alto = panel.getHeight();
@@ -98,7 +123,7 @@ public class FrmHistorial_Registro extends javax.swing.JInternalFrame {
 
         txtBuscar.setBounds(
                 (int) (ancho * 0.06),
-                (int) (alto * 0.31),
+                (int) (alto * 0.30),
                 (int) (ancho * 0.43),
                 (int) (alto * 0.06)
         );
@@ -226,11 +251,37 @@ public class FrmHistorial_Registro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void btnBuscarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarReporteActionPerformed
-      
+        String tipoBuscar = txtBuscar.getText();
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaHistorial.getModel();
+
+        modelo.setRowCount(0);
+
+        List<Motocicleta> lista = CONTROL.listarMotos();
+
+        for (Motocicleta moto : lista) {
+
+            if (moto.getTipoMoto().getNombre().trim().equalsIgnoreCase(tipoBuscar.trim())) {
+
+                modelo.addRow(new Object[]{
+                    moto.getIdMotocicleta(),
+                    moto.getMarca().getNombre(),
+                    moto.getTipoMoto().getNombre(),
+                    moto.getFechaCreacion(),
+                    "Ver Reporte"
+                });
+            }
+        }
     }//GEN-LAST:event_btnBuscarReporteActionPerformed
 
     private void btnEliminarMotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarMotoActionPerformed
+        int idEliminar = Integer.parseInt(txtBuscar.getText());
 
+        String resultado = CONTROL.eliminar(idEliminar);
+        JOptionPane.showMessageDialog(null, resultado);
+
+        cargarTabla();
+        
     }//GEN-LAST:event_btnEliminarMotoActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
