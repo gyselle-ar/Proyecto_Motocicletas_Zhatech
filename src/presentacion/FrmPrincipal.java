@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class FrmPrincipal extends javax.swing.JFrame {
 
     private final javax.swing.ImageIcon iconoOriginal = new javax.swing.ImageIcon(
-            getClass().getResource("/presentacion/imagenes/fondo_Principal.jpg"));
+            getClass().getResource("/presentacion/imagenes/fondo_Inicio.png"));
 
     public FrmPrincipal() {
         initComponents();
@@ -17,11 +17,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
+            
             public void windowOpened(java.awt.event.WindowEvent e) {
                 ajustarFondo();
                 ajustarBotones();
 
-                // Hace los botones invisibles pero funcionales
+               
                 for (java.awt.Component c : Escritorio.getComponents()) {
                     if (c instanceof javax.swing.JButton) {
                         javax.swing.JButton btn = (javax.swing.JButton) c;
@@ -49,10 +50,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setIconImage(new javax.swing.ImageIcon(
         getClass().getResource("/presentacion/imagenes/icono_Ventana.png")
         ).getImage());
-        
-        
-        
-        
+            
     }
 
     private void ajustarFondo() {
@@ -81,13 +79,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
 
         int btnAncho = (int) (ancho * 0.22);
-        int btnAlto = (int) (alto * 0.08);
-        int btnX = (int) (ancho * 0.06);
+        int btnAlto = (int) (alto * 0.10);
+        int btnX = (int) (ancho * 0.04);
 
-        btnCrearMoto.setBounds(btnX, (int) (alto * 0.28), btnAncho, btnAlto);
-        btnReporte.setBounds(btnX, (int) (alto * 0.44), btnAncho, btnAlto);
-        btnHistorial.setBounds(btnX, (int) (alto * 0.61), btnAncho, btnAlto);
-        btnSalir.setBounds(btnX, (int) (alto * 0.78), btnAncho, btnAlto);
+        btnCrearMoto.setBounds(btnX, (int) (alto * 0.52), btnAncho, btnAlto);
+        btnHistorial_Reporte.setBounds(btnX, (int) (alto * 0.64), btnAncho, btnAlto);
+        btnSalir.setBounds(btnX, (int) (alto * 0.76), btnAncho, btnAlto);
         btnEasterEgg.setBounds((int) (ancho * 0.48), (int) (alto * 0.16), 30, 30);
 
     }
@@ -111,8 +108,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ;
         lbFondo = new javax.swing.JLabel();
         btnCrearMoto = new javax.swing.JButton();
-        btnReporte = new javax.swing.JButton();
-        btnHistorial = new javax.swing.JButton();
+        btnHistorial_Reporte = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         btnEasterEgg = new javax.swing.JButton();
 
@@ -124,7 +120,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         Escritorio.setName(""); // NOI18N
 
-        lbFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/fondo_Principal.jpg"))); // NOI18N
+        lbFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/fondo_Inicio.png"))); // NOI18N
         Escritorio.add(lbFondo);
         lbFondo.setBounds(0, 0, 1010, 550);
 
@@ -134,23 +130,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         Escritorio.add(btnCrearMoto);
-        btnCrearMoto.setBounds(60, 140, 220, 60);
+        btnCrearMoto.setBounds(40, 280, 220, 60);
 
-        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+        btnHistorial_Reporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReporteActionPerformed(evt);
+                btnHistorial_ReporteActionPerformed(evt);
             }
         });
-        Escritorio.add(btnReporte);
-        btnReporte.setBounds(60, 240, 220, 60);
-
-        btnHistorial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHistorialActionPerformed(evt);
-            }
-        });
-        Escritorio.add(btnHistorial);
-        btnHistorial.setBounds(60, 320, 220, 60);
+        Escritorio.add(btnHistorial_Reporte);
+        btnHistorial_Reporte.setBounds(40, 350, 220, 60);
 
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,7 +146,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         Escritorio.add(btnSalir);
-        btnSalir.setBounds(60, 410, 220, 60);
+        btnSalir.setBounds(40, 420, 220, 60);
 
         btnEasterEgg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,17 +176,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         frm.setVisible(true);
     }//GEN-LAST:event_btnCrearMotoActionPerformed
 
-    private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
-        FrmHistorial frm = new FrmHistorial();
+    private void btnHistorial_ReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorial_ReporteActionPerformed
+        FrmHistorial_Registro frm = new FrmHistorial_Registro();
         Escritorio.add(frm);
         frm.setVisible(true);
-    }//GEN-LAST:event_btnHistorialActionPerformed
-
-    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
-        FrmReporte frm = new FrmReporte();
-        Escritorio.add(frm);
-        frm.setVisible(true);
-    }//GEN-LAST:event_btnReporteActionPerformed
+    }//GEN-LAST:event_btnHistorial_ReporteActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
     
@@ -238,8 +220,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JButton btnCrearMoto;
     private javax.swing.JButton btnEasterEgg;
-    private javax.swing.JButton btnHistorial;
-    private javax.swing.JButton btnReporte;
+    private javax.swing.JButton btnHistorial_Reporte;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel lbFondo;
