@@ -14,50 +14,26 @@ public class ReporteControl {
     private final ReporteDAO DATOS;
     private DefaultTableModel modeloTabla;
 
-    public ReporteControl(ReporteDAO DATOS) {
-        this.DATOS = DATOS;
+    public ReporteControl() {
+        this.DATOS = new ReporteDAO();
     }
 
-    public String generarReporte(Motocicleta moto) {
+    
+    public String guardar(Reporte obj) {
 
-        Reporte reporte = moto.generarReporte();
-
-        if (DATOS.guardar(reporte)) {
-            return "Reporte generado con éxito.";
-        } else {
-            return "Error al generar el reporte.";
+        if (DATOS.guardar(obj)) {
+            return "Reporte guardado correctamente.";
         }
+        return "Error al guardar el reporte.";
     }
     
-    public DefaultTableModel listar() {
-
-        List<Reporte> lista = new ArrayList<>();
-        lista.addAll(DATOS.listar());
-
-        String[] titulos = {"Id", "IdMoto", "Descripción"};
-        this.modeloTabla = new DefaultTableModel(null, titulos);
-
-        String[] registro = new String[3];
-
-        for (Reporte item : lista) {
-
-            registro[0] = String.valueOf(item.getId());
-            registro[1] = String.valueOf(item.getIdMotocicleta());
-            registro[2] = item.getDescripcion();
-
-            this.modeloTabla.addRow(registro);
-        }
-
-        return this.modeloTabla;
+    public Reporte buscarPorIdMoto(int idMotocicleta) {
+        return DATOS.buscarPorMoto(idMotocicleta);
     }
     
-    public Reporte buscarPorId(int id) {
-        return DATOS.buscarPorId(id);
-    }
-    
-    public String eliminar(int id) {
+    public String eliminarPorMoto(int idMotocicleta) {
 
-        if (DATOS.eliminar(id)) {
+        if (DATOS.eliminar(idMotocicleta)) {
             return "Reporte eliminado con éxito.";
         } else {
             return "No se pudo eliminar el reporte.";

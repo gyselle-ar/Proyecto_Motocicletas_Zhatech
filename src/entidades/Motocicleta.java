@@ -1,25 +1,27 @@
 package entidades;
 
+import datos.interfaces.Testeable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Motocicleta implements Testeable {
     
     protected int idMotocicleta;
-    protected int idMarca;
-    protected int idTipoMoto;
+    protected Marca marca;
+    protected TipoMoto tipoMoto;
     protected LocalDate fechaCreacion;
     protected List<Componente> componentes;
             
     public Motocicleta() {
     }
 
-    public Motocicleta(int idMotocicleta, int idMarca, int idTipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
+    public Motocicleta(int idMotocicleta, Marca marca, TipoMoto tipoMoto, LocalDate fechaCreacion, List<Componente> componentes) {
         this.idMotocicleta = idMotocicleta;
-        this.idMarca = idMarca;
-        this.idTipoMoto = idTipoMoto;
+        this.marca = marca;
+        this.tipoMoto = tipoMoto;
         this.fechaCreacion = fechaCreacion;
-        this.componentes = componentes;
+        this.componentes = new ArrayList<>();
     }
 
     public int getIdMotocicleta() {
@@ -30,20 +32,20 @@ public abstract class Motocicleta implements Testeable {
         this.idMotocicleta = idMotocicleta;
     }
 
-    public int getIdMarca() {
-        return idMarca;
+    public Marca getMarca() {
+        return marca;
     }
 
-    public void setIdMarca(int idMarca) {
-        this.idMarca = idMarca;
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
-    public int getIdTipoMoto() {
-        return idTipoMoto;
+    public TipoMoto getTipoMoto() {
+        return tipoMoto;
     }
 
-    public void setIdTipoMoto(int idTipoMoto) {
-        this.idTipoMoto = idTipoMoto;
+    public void setTipoMoto(TipoMoto tipoMoto) {
+        this.tipoMoto = tipoMoto;
     }
 
     public LocalDate getFechaCreacion() {
@@ -62,21 +64,21 @@ public abstract class Motocicleta implements Testeable {
         this.componentes = componentes;
     }
 
+    public void agregarComponente(Componente c){
+        componentes.add(c);
+    }
+
+    public abstract Reporte generarReporte();
+ 
     @Override
     public boolean encenderSistema() {
         return true;
     }
 
     @Override
-    public Reporte generarReporte() {
-        return new Reporte(0, idMotocicleta, "");
-    }
-
-    @Override
     public String toString() {
         return "Motocicleta{" + "idMotocicleta=" + idMotocicleta 
-                + ", marca=" + idMarca + ", tipoMoto=" + idTipoMoto 
-                + ", fechaCreacion=" + fechaCreacion 
-                + ", componentes=" + componentes + '}';
-    } 
+                + ", marca=" + marca + ", tipoMoto=" + tipoMoto + ", fechaCreacion=" 
+                + fechaCreacion + ", componentes=" + componentes + '}';
+    }
 }
