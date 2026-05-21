@@ -102,7 +102,7 @@ public class MotocicletaControl {
         return DATOS.buscarPorId(id);
     }
 
-    public String crearMoto(Marca marca, TipoMoto tipoMoto, LocalDate fechaCreacion, List<Componente> componentes, boolean turboActivado, boolean modoPista) {
+    public String crearMotoDeportiva(Marca marca, TipoMoto tipoMoto, LocalDate fechaCreacion, List<Componente> componentes, boolean turboActivado, boolean modoPista) {
 
         ValidadorCompatibilidad validador = new ValidadorCompatibilidad();
 
@@ -132,6 +132,108 @@ public class MotocicletaControl {
 
             motoDep.setTurboActivado(turboActivado);
             motoDep.setModoPista(modoPista);
+        }
+
+        obj.setMarca(marca);
+        obj.setTipoMoto(tipoMoto);
+        obj.setFechaCreacion(fechaCreacion);
+        obj.setComponentes(componentes);
+        DATOS.guardar(obj);
+
+        obj.setComponentes(componentes);
+
+        for (Componente componente : componentes) {
+            DETALLECONFI.guardarDetalleConfiguracion(obj.getIdMotocicleta(), componente.getIdComponente());
+        }
+
+        Reporte reporte = obj.generarReporte();
+
+        reporte.setMotocicleta(obj);
+        CONTROLREPORTE.guardar(reporte);
+
+        return "Motocicleta creada con éxito.";
+    }
+    
+    public String crearMotoTrabajo(Marca marca, TipoMoto tipoMoto, LocalDate fechaCreacion, List<Componente> componentes, boolean testResistenciaActivaodo) {
+
+        ValidadorCompatibilidad validador = new ValidadorCompatibilidad();
+
+        for (int i = 0; i < componentes.size(); i++) {
+            for (int j = i + 1; j < componentes.size(); j++) {
+                String resultado = validador.validarCompatibilidad(componentes.get(i).getNombre(), componentes.get(j).getNombre());
+
+                if (!resultado.equals("Componentes Compatibles")) {
+                    return resultado;
+                }
+            }
+        }
+
+        Motocicleta obj = null;
+
+        if (tipoMoto.getNombre().equalsIgnoreCase("Deportiva")) {
+            obj = new MotoDeportiva();
+        } else if (tipoMoto.getNombre().equalsIgnoreCase("Cruiser")) {
+            obj = new MotoCruiser();
+        } else if (tipoMoto.getNombre().equalsIgnoreCase("Trabajo")) {
+            obj = new MotoTrabajo();
+        }
+
+        if (obj instanceof MotoTrabajo) {
+
+            MotoTrabajo motoTra = (MotoTrabajo) obj;
+
+            motoTra.setTestResistenciaActivado(testResistenciaActivaodo);
+        }
+
+        obj.setMarca(marca);
+        obj.setTipoMoto(tipoMoto);
+        obj.setFechaCreacion(fechaCreacion);
+        obj.setComponentes(componentes);
+        DATOS.guardar(obj);
+
+        obj.setComponentes(componentes);
+
+        for (Componente componente : componentes) {
+            DETALLECONFI.guardarDetalleConfiguracion(obj.getIdMotocicleta(), componente.getIdComponente());
+        }
+
+        Reporte reporte = obj.generarReporte();
+
+        reporte.setMotocicleta(obj);
+        CONTROLREPORTE.guardar(reporte);
+
+        return "Motocicleta creada con éxito.";
+    }
+    
+    public String crearMotoCruiser(Marca marca, TipoMoto tipoMoto, LocalDate fechaCreacion, List<Componente> componentes, boolean testConfortActivado) {
+
+        ValidadorCompatibilidad validador = new ValidadorCompatibilidad();
+
+        for (int i = 0; i < componentes.size(); i++) {
+            for (int j = i + 1; j < componentes.size(); j++) {
+                String resultado = validador.validarCompatibilidad(componentes.get(i).getNombre(), componentes.get(j).getNombre());
+
+                if (!resultado.equals("Componentes Compatibles")) {
+                    return resultado;
+                }
+            }
+        }
+
+        Motocicleta obj = null;
+
+        if (tipoMoto.getNombre().equalsIgnoreCase("Deportiva")) {
+            obj = new MotoDeportiva();
+        } else if (tipoMoto.getNombre().equalsIgnoreCase("Cruiser")) {
+            obj = new MotoCruiser();
+        } else if (tipoMoto.getNombre().equalsIgnoreCase("Trabajo")) {
+            obj = new MotoTrabajo();
+        }
+
+        if (obj instanceof MotoCruiser) {
+
+            MotoCruiser motoCru = (MotoCruiser) obj;
+
+            motoCru.setTestConfortActivado(testConfortActivado);
         }
 
         obj.setMarca(marca);

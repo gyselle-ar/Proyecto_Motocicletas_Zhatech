@@ -260,6 +260,7 @@ public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
         cmbMarca.setBackground(new java.awt.Color(43, 47, 54));
         cmbMarca.setForeground(new java.awt.Color(255, 255, 255));
         cmbMarca.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        cmbMarca.addActionListener(this::cmbMarcaActionPerformed);
         jPanel1.add(cmbMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 240, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/fondo_CrearDeportiva.png"))); // NOI18N
@@ -292,7 +293,7 @@ public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
         componentes.add(manillar);
         componentes.add(carenaje);
 
-        String resultado = CONTROLMOTO.crearMoto(marca, tipoMoto, fecha, componentes, moto.isTurboActivado(), moto.isModoPista());
+        String resultado = CONTROLMOTO.crearMotoDeportiva(marca, tipoMoto, fecha, componentes, moto.isTurboActivado(), moto.isModoPista());
 
     JOptionPane.showMessageDialog(this, resultado);
     }//GEN-LAST:event_btnCrearMoto_ReporteActionPerformed
@@ -347,6 +348,10 @@ public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
         moto.setModoPista(true);
         JOptionPane.showMessageDialog(null, "Modo Pista activado");
     }//GEN-LAST:event_btnModoPistaActionPerformed
+
+    private void cmbMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMarcaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMarcaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

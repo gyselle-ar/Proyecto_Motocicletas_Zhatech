@@ -1,15 +1,41 @@
 
 package presentacion;
 
+import entidades.Componente;
+import entidades.Marca;
+import entidades.MotoCruiser;
+import entidades.TipoMoto;
+import entidades.ValidadorCompatibilidad;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import negocio.ComponenteControl;
+import negocio.MarcaControl;
+import negocio.MotocicletaControl;
+
 
 public class FrmMotoCruiser extends javax.swing.JInternalFrame {
 
      private final javax.swing.ImageIcon iconoOriginal = new javax.swing.ImageIcon(
         getClass().getResource("/presentacion/imagenes/fondo_CrearCruiser.png"));
+     
+    private final MarcaControl CONTROLMARCA;
+    private final ComponenteControl CONTROLCOMPONENTE;
+    private final MotocicletaControl CONTROLMOTO;
+    private MotoCruiser moto;
  
     public FrmMotoCruiser() {
         initComponents();
- 
+        
+        CONTROLMARCA = new MarcaControl();
+        CONTROLCOMPONENTE = new ComponenteControl();
+        CONTROLMOTO = new MotocicletaControl();
+        moto = new MotoCruiser();
+                
+        cargarMarcas();
+        cargarComponentes();
+        
         try {
             setMaximum(true);
         } catch (java.beans.PropertyVetoException e) {
@@ -53,12 +79,51 @@ public class FrmMotoCruiser extends javax.swing.JInternalFrame {
         hacerBotonesInvisibles();
     }
  
+    private void cargarMarcas() {
+        cmbMarca.removeAllItems();
+        List<Marca> lista = CONTROLMARCA.listarPorTipoMoto(3);
+
+        for(Marca item : lista){
+            cmbMarca.addItem(item);
+        }
+    }
+    
+    private void cargarComponentes() {
+
+        cmbMotor.removeAllItems();
+        cmbRueda.removeAllItems();
+        cmbManillar.removeAllItems();
+        cmbCarenaje.removeAllItems();
+
+        List<Componente> lista = CONTROLCOMPONENTE.listarPorTipoMoto(3);
+
+        for(Componente item : lista){
+
+            switch(item.getCategoria()){
+
+            case "Motor":
+                cmbMotor.addItem(item);
+                break;
+
+            case "Rueda":
+                cmbRueda.addItem(item);
+                break;
+
+            case "Manillar":
+                cmbManillar.addItem(item);
+                break;
+
+            case "Carenaje":
+                cmbCarenaje.addItem(item);
+                break;
+        }
+    }
+}
+    
     private void ajustarComponentes(javax.swing.JPanel panel) {
         int ancho = panel.getWidth();
         int alto  = panel.getHeight();
         if (ancho == 0 || alto == 0) return;
- 
-        
         
  
         
@@ -168,7 +233,11 @@ public class FrmMotoCruiser extends javax.swing.JInternalFrame {
 
         btnTestConfort.addActionListener(this::btnTestConfortActionPerformed);
         jPanel1.add(btnTestConfort, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 470, 350, 70));
+
+        btnCrearYGenerar.addActionListener(this::btnCrearYGenerarActionPerformed);
         jPanel1.add(btnCrearYGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 550, 260, 60));
+
+        btnValidarCompatibilidad.addActionListener(this::btnValidarCompatibilidadActionPerformed);
         jPanel1.add(btnValidarCompatibilidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 330, 310, 50));
 
         cmbMotor.setBackground(new java.awt.Color(43, 47, 54));
@@ -177,6 +246,7 @@ public class FrmMotoCruiser extends javax.swing.JInternalFrame {
         jPanel1.add(cmbMotor, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 145, 170, 40));
 
         cmbManillar.setBackground(new java.awt.Color(43, 47, 54));
+        cmbManillar.setForeground(new java.awt.Color(255, 255, 255));
         cmbManillar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(cmbManillar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 200, 170, 40));
 
@@ -208,7 +278,8 @@ public class FrmMotoCruiser extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTestConfortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestConfortActionPerformed
-        // TODO add your handling code here:
+        moto.setTestConfortActivado(true);
+        JOptionPane.showMessageDialog(null, "Test de confort Activado");
     }//GEN-LAST:event_btnTestConfortActionPerformed
 
     private void cmbRuedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRuedaActionPerformed
@@ -219,16 +290,75 @@ public class FrmMotoCruiser extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbCarenajeActionPerformed
 
+    private void btnValidarCompatibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarCompatibilidadActionPerformed
+        Componente motor = (Componente) cmbMotor.getSelectedItem();
+        Componente rueda = (Componente) cmbRueda.getSelectedItem();
+        Componente manillar = (Componente) cmbManillar.getSelectedItem();
+        Componente carenaje = (Componente) cmbCarenaje.getSelectedItem();
+
+        List<Componente> componentes = new ArrayList<>();
+
+        componentes.add(motor);
+        componentes.add(rueda);
+        componentes.add(manillar);
+        componentes.add(carenaje);
+
+        ValidadorCompatibilidad validador = new ValidadorCompatibilidad();
+
+        for (int i = 0; i < componentes.size(); i++) {
+            for (int j = i + 1; j < componentes.size(); j++) {
+
+            String resultado = validador.validarCompatibilidad(
+                    componentes.get(i).getNombre(),
+                    componentes.get(j).getNombre()
+            );
+
+            if (!resultado.equals("Componentes Compatibles")) {
+                JOptionPane.showMessageDialog(this, resultado);
+                return;
+            }
+        }
+    }
+
+    JOptionPane.showMessageDialog(this, "Todos los componentes son compatibles");
+    }//GEN-LAST:event_btnValidarCompatibilidadActionPerformed
+
+    private void btnCrearYGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearYGenerarActionPerformed
+        Marca marca = (Marca) cmbMarca.getSelectedItem();
+
+        TipoMoto tipoMoto = new TipoMoto();
+        tipoMoto.setIdTipoMoto(3);
+        tipoMoto.setNombre("Deportiva");
+
+        LocalDate fecha = LocalDate.now();
+
+        Componente motor = (Componente) cmbMotor.getSelectedItem();
+        Componente rueda = (Componente) cmbRueda.getSelectedItem();
+        Componente manillar = (Componente) cmbManillar.getSelectedItem();
+        Componente carenaje = (Componente) cmbCarenaje.getSelectedItem();
+
+        List<Componente> componentes = new ArrayList<>();
+
+        componentes.add(motor);
+        componentes.add(rueda);
+        componentes.add(manillar);
+        componentes.add(carenaje);
+
+        String resultado = CONTROLMOTO.crearMotoCruiser(marca, tipoMoto, fecha, componentes, moto.isTestConfortActivado());
+
+    JOptionPane.showMessageDialog(this, resultado);
+    }//GEN-LAST:event_btnCrearYGenerarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearYGenerar;
     private javax.swing.JButton btnTestConfort;
     private javax.swing.JButton btnValidarCompatibilidad;
-    private javax.swing.JComboBox<String> cmbCarenaje;
-    private javax.swing.JComboBox<String> cmbManillar;
-    private javax.swing.JComboBox<String> cmbMarca;
-    private javax.swing.JComboBox<String> cmbMotor;
-    private javax.swing.JComboBox<String> cmbRueda;
+    private javax.swing.JComboBox<Componente> cmbCarenaje;
+    private javax.swing.JComboBox<Componente> cmbManillar;
+    private javax.swing.JComboBox<Marca> cmbMarca;
+    private javax.swing.JComboBox<Componente> cmbMotor;
+    private javax.swing.JComboBox<Componente> cmbRueda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbMensajeValidacion;

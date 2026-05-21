@@ -1,18 +1,41 @@
 
 package presentacion;
 
-/**
- *
- * @author carlo
- */
+import entidades.Componente;
+import entidades.Marca;
+import entidades.MotoTrabajo;
+import entidades.TipoMoto;
+import entidades.ValidadorCompatibilidad;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import negocio.ComponenteControl;
+import negocio.MarcaControl;
+import negocio.MotocicletaControl;
+
+
 public class FrmMotoTrabajo extends javax.swing.JInternalFrame {
 
     private final javax.swing.ImageIcon iconoOriginal = new javax.swing.ImageIcon(
         getClass().getResource("/presentacion/imagenes/fondo_CrearTrabajo.png"));
+    
+    private final MarcaControl CONTROLMARCA;
+    private final ComponenteControl CONTROLCOMPONENTE;
+    private final MotocicletaControl CONTROLMOTO;
+    private MotoTrabajo moto;
  
     public FrmMotoTrabajo() {
         initComponents();
  
+        CONTROLMARCA = new MarcaControl();
+        CONTROLCOMPONENTE = new ComponenteControl();
+        CONTROLMOTO = new MotocicletaControl();
+        moto = new MotoTrabajo();
+                
+        cargarMarcas();
+        cargarComponentes();
+        
         try {
             setMaximum(true);
         } catch (java.beans.PropertyVetoException e) {
@@ -55,6 +78,47 @@ public class FrmMotoTrabajo extends javax.swing.JInternalFrame {
         hacerBotonesInvisibles();
     }
  
+    private void cargarMarcas() {
+        cmbMarca.removeAllItems();
+        List<Marca> lista = CONTROLMARCA.listarPorTipoMoto(2);
+
+        for(Marca item : lista){
+            cmbMarca.addItem(item);
+        }
+    }
+    
+    private void cargarComponentes() {
+
+        cmbMotor.removeAllItems();
+        cmbRueda.removeAllItems();
+        cmbManillar.removeAllItems();
+        cmbCarenaje.removeAllItems();
+
+        List<Componente> lista = CONTROLCOMPONENTE.listarPorTipoMoto(2);
+
+        for(Componente item : lista){
+
+            switch(item.getCategoria()){
+
+            case "Motor":
+                cmbMotor.addItem(item);
+                break;
+
+            case "Rueda":
+                cmbRueda.addItem(item);
+                break;
+
+            case "Manillar":
+                cmbManillar.addItem(item);
+                break;
+
+            case "Carenaje":
+                cmbCarenaje.addItem(item);
+                break;
+        }
+    }
+}
+    
     private void ajustarComponentes(javax.swing.JPanel panel) {
         int ancho = panel.getWidth();
         int alto  = panel.getHeight();
@@ -131,7 +195,7 @@ public class FrmMotoTrabajo extends javax.swing.JInternalFrame {
             btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         }
     }
- 
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -156,8 +220,14 @@ public class FrmMotoTrabajo extends javax.swing.JInternalFrame {
         getContentPane().setLayout(null);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnTestResistencia.addActionListener(this::btnTestResistenciaActionPerformed);
         jPanel1.add(btnTestResistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 470, 350, 70));
+
+        btnValidarCom.addActionListener(this::btnValidarComActionPerformed);
         jPanel1.add(btnValidarCom, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 330, 310, 50));
+
+        btnCrearMoto.addActionListener(this::btnCrearMotoActionPerformed);
         jPanel1.add(btnCrearMoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 550, 260, 60));
 
         cmbMotor.setBackground(new java.awt.Color(43, 47, 54));
@@ -184,8 +254,6 @@ public class FrmMotoTrabajo extends javax.swing.JInternalFrame {
         cmbMarca.setForeground(new java.awt.Color(255, 255, 255));
         cmbMarca.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(cmbMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 182, 230, 40));
-
-        txtValidacionCom.setText("jLabel2");
         jPanel1.add(txtValidacionCom, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 200, 310, 120));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/fondo_CrearTrabajo.png"))); // NOI18N
@@ -197,18 +265,85 @@ public class FrmMotoTrabajo extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnValidarComActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarComActionPerformed
+        Componente motor = (Componente) cmbMotor.getSelectedItem();
+        Componente rueda = (Componente) cmbRueda.getSelectedItem();
+        Componente manillar = (Componente) cmbManillar.getSelectedItem();
+        Componente carenaje = (Componente) cmbCarenaje.getSelectedItem();
+
+        List<Componente> componentes = new ArrayList<>();
+
+        componentes.add(motor);
+        componentes.add(rueda);
+        componentes.add(manillar);
+        componentes.add(carenaje);
+
+        ValidadorCompatibilidad validador = new ValidadorCompatibilidad();
+
+        for (int i = 0; i < componentes.size(); i++) {
+            for (int j = i + 1; j < componentes.size(); j++) {
+
+            String resultado = validador.validarCompatibilidad(
+                    componentes.get(i).getNombre(),
+                    componentes.get(j).getNombre()
+            );
+
+            if (!resultado.equals("Componentes Compatibles")) {
+                JOptionPane.showMessageDialog(this, resultado);
+                return;
+            }
+        }
+    }
+
+    JOptionPane.showMessageDialog(this, "Todos los componentes son compatibles");
+     
+    }//GEN-LAST:event_btnValidarComActionPerformed
+
+    private void btnCrearMotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearMotoActionPerformed
+        Marca marca = (Marca) cmbMarca.getSelectedItem();
+
+        TipoMoto tipoMoto = new TipoMoto();
+        tipoMoto.setIdTipoMoto(2);
+        tipoMoto.setNombre("Trabajo");
+
+        LocalDate fecha = LocalDate.now();
+
+        Componente motor = (Componente) cmbMotor.getSelectedItem();
+        Componente rueda = (Componente) cmbRueda.getSelectedItem();
+        Componente manillar = (Componente) cmbManillar.getSelectedItem();
+        Componente carenaje = (Componente) cmbCarenaje.getSelectedItem();
+
+        List<Componente> componentes = new ArrayList<>();
+
+        componentes.add(motor);
+        componentes.add(rueda);
+        componentes.add(manillar);
+        componentes.add(carenaje);
+
+        String resultado = CONTROLMOTO.crearMotoTrabajo(marca, tipoMoto, fecha, componentes, moto.isTestResistenciaActivado());
+        
+
+    JOptionPane.showMessageDialog(this, resultado);
+    }//GEN-LAST:event_btnCrearMotoActionPerformed
+
+    private void btnTestResistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestResistenciaActionPerformed
+        moto.setTestResistenciaActivado(true);
+        JOptionPane.showMessageDialog(null, "Test de Resistencia Activado");
+    }//GEN-LAST:event_btnTestResistenciaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearMoto;
     private javax.swing.JButton btnTestResistencia;
     private javax.swing.JButton btnValidarCom;
-    private javax.swing.JComboBox<String> cmbCarenaje;
-    private javax.swing.JComboBox<String> cmbManillar;
-    private javax.swing.JComboBox<String> cmbMarca;
-    private javax.swing.JComboBox<String> cmbMotor;
-    private javax.swing.JComboBox<String> cmbRueda;
+    private javax.swing.JComboBox<Componente> cmbCarenaje;
+    private javax.swing.JComboBox<Componente> cmbManillar;
+    private javax.swing.JComboBox<Marca> cmbMarca;
+    private javax.swing.JComboBox<Componente> cmbMotor;
+    private javax.swing.JComboBox<Componente> cmbRueda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel txtValidacionCom;
     // End of variables declaration//GEN-END:variables
 }
+

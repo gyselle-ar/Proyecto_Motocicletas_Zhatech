@@ -20,22 +20,22 @@ public class ValidadorCompatibilidad {
             "Kawasaki Ninja 400#Honda VTEC#El carenaje Kawasaki Ninja 400 es incompatible con el manillar Honda VTEC.");
         
         incompatibles.add(
-            "Honda Fireblade#Yamaha MT Series#El carenaje Honda Fireblade es incompatible con el manillar Victory High Ball.");
+            "Harley-Davidson Ape Hanger#Ducati Panigale V4#El manillar Harley-Davidson Ape Hanger es incompatible con las ruedas Ducati Panigale V4.");
         
         incompatibles.add(
-            "Indian Thunderstroke 111#Bajaj Pulsar RS200#El motor Indian Thunderstroke 111 es incompatible con el carenaje Bajaj Pulsar RS200.");
+            "Harley-Davidson Fat Boy#Ducati SuperSport#Las ruedas Harley-Davidson Fat Boy son incompatibles con el carenaje Ducati SuperSport.");
         
         incompatibles.add(
-            "Victory Freedom 106#TVS Raider#El motor Victory Freedom 106 es incompatible con el manillar TVS Raider.");
+            "Harley-Davidson Milwaukee-Eight#Ducati SuperSport#El motor Harley-Davidson Milwaukee-Eight es incompatible con el carenaje Ducati SuperSport.");
         
         incompatibles.add(
-            "Ducati Panigale V4#Indian Challenger#La rueda Ducati Panigale V4 es incompatible con el carenaje Indian Challenger.");
+            "Victory High Ball#TVS Apache RR#El manillar Victory High Ball es incompatible con el carenaje TVS Apache RR.");
         
         incompatibles.add(
-            "Bajaj DTS-i#Kawasaki ZX-10R#El motor Bajaj DTS-i es incompatible con la rueda Kawasaki ZX-10R.");
+            "Victory Octane#Bajaj Pulsar RS200#Las ruedas Victory Octane son incompatibles con el carenaje Bajaj Pulsar RS200.");
         
         incompatibles.add(
-            "Yamaha Crossplane#Indian Chief Dark Horse#El motor Yamaha Crossplane es incompatible con la rueda Indian Chief Dark Horse.");
+            "Victory Freedom 106#TVS Apache RR#El motor Victory Freedom 106 es incompatible con el carenaje TVS Apache RR.");
 
         String combinacion1 = componente1.trim().toLowerCase() + "#" + componente2.trim().toLowerCase();
         String combinacion2 = componente2.trim().toLowerCase() + "#" + componente1.trim().toLowerCase();
