@@ -62,7 +62,6 @@ public class Componente {
 
     @Override
     public String toString() {
-        return "Componente{" + "idComponente=" + idComponente 
-                + ", nombre=" + nombre + ", categoria=" + categoria + '}';
+        return nombre;
     }  
 }

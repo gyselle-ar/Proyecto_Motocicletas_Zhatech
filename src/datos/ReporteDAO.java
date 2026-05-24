@@ -60,15 +60,22 @@ public class ReporteDAO implements CrudSimpleInterface<Reporte>{
     }
 
     @Override
-    public boolean guardar(Reporte obj) {
+    public boolean guardar(Reporte reporte) {
+        
+       resp = false;
+       
        try {
             ps = CON.conectar().prepareStatement("INSERT INTO reporte (id_motocicleta, descripcion) values (?,?)");
             
-            ps.setInt(1, obj.getIdMotocicleta());
-            ps.setString(2, obj.getDescripcion());
-            
+            System.out.println(
+            "ID QUE SE ENVIA AL REPORTE: "
+            + reporte.getMotocicleta().getIdMotocicleta()
+        );
+            ps.setInt(1, reporte.getMotocicleta().getIdMotocicleta());
+            ps.setString(2, reporte.getDescripcion());
             if (ps.executeUpdate() > 0) {
                 resp = true;
+                 System.out.println("Reporte guardado correctamente");
             }
             ps.close();
             
@@ -83,12 +90,12 @@ public class ReporteDAO implements CrudSimpleInterface<Reporte>{
     }
 
     @Override
-    public boolean eliminar(int id) {
+    public boolean eliminar(int idMotocicleta) {
         resp = false;
         
         try {
-            ps = CON.conectar().prepareStatement("DELETE FROM reporte WHERE id_reporte = ?");
-            ps.setInt(1, id);
+            ps = CON.conectar().prepareStatement("DELETE FROM reporte WHERE id_motocicleta = ?");
+            ps.setInt(1, idMotocicleta);
             
             if (ps.executeUpdate() > 0) {
                 resp = true;
@@ -140,7 +147,7 @@ public class ReporteDAO implements CrudSimpleInterface<Reporte>{
         Reporte reporte = null;
         
         try {
-            ps = CON.conectar().prepareStatement("SELECT FROM reporte WHERE id_motocicleta = ?");
+            ps = CON.conectar().prepareStatement("SELECT * FROM reporte WHERE id_motocicleta = ?");
             ps.setInt(1, idMotocicleta);
             rs = ps.executeQuery();
             
