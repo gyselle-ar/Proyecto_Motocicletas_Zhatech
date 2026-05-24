@@ -1,4 +1,3 @@
-
 package presentacion;
 
 import entidades.Componente;
@@ -14,39 +13,38 @@ import negocio.ComponenteControl;
 import negocio.MarcaControl;
 import negocio.MotocicletaControl;
 
-
 public class FrmMotoTrabajo extends javax.swing.JInternalFrame {
 
     private final javax.swing.ImageIcon iconoOriginal = new javax.swing.ImageIcon(
-        getClass().getResource("/presentacion/imagenes/fondo_CrearTrabajo.png"));
-    
+            getClass().getResource("/presentacion/imagenes/fondo_CrearTrabajo.png"));
+
     private final MarcaControl CONTROLMARCA;
     private final ComponenteControl CONTROLCOMPONENTE;
     private final MotocicletaControl CONTROLMOTO;
     private MotoTrabajo moto;
- 
+
     public FrmMotoTrabajo() {
         initComponents();
- 
+
         CONTROLMARCA = new MarcaControl();
         CONTROLCOMPONENTE = new ComponenteControl();
         CONTROLMOTO = new MotocicletaControl();
         moto = new MotoTrabajo();
-                
+
         cargarMarcas();
         cargarComponentes();
-        
+
         try {
             setMaximum(true);
         } catch (java.beans.PropertyVetoException e) {
             e.printStackTrace();
         }
- 
+
         setFrameIcon(new javax.swing.ImageIcon(
-            getClass().getResource("/presentacion/imagenes/icon_MotoTrabajo.png")));
- 
+                getClass().getResource("/presentacion/imagenes/icon_MotoTrabajo.png")));
+
         getContentPane().removeAll();
- 
+
         javax.swing.JPanel pnlFondo = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(java.awt.Graphics g) {
@@ -55,7 +53,7 @@ public class FrmMotoTrabajo extends javax.swing.JInternalFrame {
             }
         };
         pnlFondo.setLayout(null);
- 
+
         pnlFondo.add(btnTestResistencia);
         pnlFondo.add(btnValidarCom);
         pnlFondo.add(btnCrearMoto);
@@ -64,29 +62,29 @@ public class FrmMotoTrabajo extends javax.swing.JInternalFrame {
         pnlFondo.add(cmbManillar);
         pnlFondo.add(cmbRueda);
         pnlFondo.add(cmbCarenaje);
- 
+
         getContentPane().setLayout(new java.awt.BorderLayout());
         getContentPane().add(pnlFondo, java.awt.BorderLayout.CENTER);
- 
+
         pnlFondo.addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 ajustarComponentes(pnlFondo);
             }
         });
- 
+
         hacerBotonesInvisibles();
     }
- 
+
     private void cargarMarcas() {
         cmbMarca.removeAllItems();
         List<Marca> lista = CONTROLMARCA.listarPorTipoMoto(2);
 
-        for(Marca item : lista){
+        for (Marca item : lista) {
             cmbMarca.addItem(item);
         }
     }
-    
+
     private void cargarComponentes() {
 
         cmbMotor.removeAllItems();
@@ -96,93 +94,90 @@ public class FrmMotoTrabajo extends javax.swing.JInternalFrame {
 
         List<Componente> lista = CONTROLCOMPONENTE.listarPorTipoMoto(2);
 
-        for(Componente item : lista){
+        for (Componente item : lista) {
 
-            switch(item.getCategoria()){
+            switch (item.getCategoria()) {
 
-            case "Motor":
-                cmbMotor.addItem(item);
-                break;
+                case "Motor":
+                    cmbMotor.addItem(item);
+                    break;
 
-            case "Rueda":
-                cmbRueda.addItem(item);
-                break;
+                case "Rueda":
+                    cmbRueda.addItem(item);
+                    break;
 
-            case "Manillar":
-                cmbManillar.addItem(item);
-                break;
+                case "Manillar":
+                    cmbManillar.addItem(item);
+                    break;
 
-            case "Carenaje":
-                cmbCarenaje.addItem(item);
-                break;
+                case "Carenaje":
+                    cmbCarenaje.addItem(item);
+                    break;
+            }
         }
     }
-}
-    
+
     private void ajustarComponentes(javax.swing.JPanel panel) {
         int ancho = panel.getWidth();
-        int alto  = panel.getHeight();
-        if (ancho == 0 || alto == 0) return;
- 
-        
+        int alto = panel.getHeight();
+        if (ancho == 0 || alto == 0) {
+            return;
+        }
+
         cmbMarca.setBounds(
-            (int)(ancho * 0.04),
-            (int)(alto  * 0.28),
-            (int)(ancho * 0.23),
-            (int)(alto  * 0.06)
+                (int) (ancho * 0.04),
+                (int) (alto * 0.28),
+                (int) (ancho * 0.23),
+                (int) (alto * 0.06)
         );
- 
-        
+
         cmbMotor.setBounds(
-            (int)(ancho * 0.43),
-            (int)(alto  * 0.22),
-            (int)(ancho * 0.17),
-            (int)(alto  * 0.06)
+                (int) (ancho * 0.43),
+                (int) (alto * 0.22),
+                (int) (ancho * 0.17),
+                (int) (alto * 0.06)
         );
         cmbManillar.setBounds(
-            (int)(ancho * 0.43),
-            (int)(alto  * 0.30),
-            (int)(ancho * 0.17),
-            (int)(alto  * 0.06)
+                (int) (ancho * 0.43),
+                (int) (alto * 0.30),
+                (int) (ancho * 0.17),
+                (int) (alto * 0.06)
         );
         cmbRueda.setBounds(
-            (int)(ancho * 0.43),
-            (int)(alto  * 0.38),
-            (int)(ancho * 0.17),
-            (int)(alto  * 0.06)
+                (int) (ancho * 0.43),
+                (int) (alto * 0.38),
+                (int) (ancho * 0.17),
+                (int) (alto * 0.06)
         );
         cmbCarenaje.setBounds(
-            (int)(ancho * 0.43),
-            (int)(alto  * 0.46),
-            (int)(ancho * 0.17),
-            (int)(alto  * 0.06)
+                (int) (ancho * 0.43),
+                (int) (alto * 0.46),
+                (int) (ancho * 0.17),
+                (int) (alto * 0.06)
         );
- 
-        
+
         btnValidarCom.setBounds(
-            (int)(ancho * 0.64),
-            (int)(alto  * 0.46),
-            (int)(ancho * 0.31),
-            (int)(alto  * 0.07)
+                (int) (ancho * 0.64),
+                (int) (alto * 0.46),
+                (int) (ancho * 0.31),
+                (int) (alto * 0.07)
         );
- 
-        
+
         btnTestResistencia.setBounds(
-            (int)(ancho * 0.26),
-            (int)(alto  * 0.70),
-            (int)(ancho * 0.35),
-            (int)(alto  * 0.10)
+                (int) (ancho * 0.26),
+                (int) (alto * 0.70),
+                (int) (ancho * 0.35),
+                (int) (alto * 0.10)
         );
- 
-        
+
         btnCrearMoto.setBounds(
-            (int)(ancho * 0.68),
-            (int)(alto  * 0.82),
-            (int)(ancho * 0.26),
-            (int)(alto  * 0.09)
+                (int) (ancho * 0.68),
+                (int) (alto * 0.82),
+                (int) (ancho * 0.26),
+                (int) (alto * 0.09)
         );
     }
- 
+
     private void hacerBotonesInvisibles() {
         javax.swing.JButton[] botones = {
             btnTestResistencia, btnValidarCom, btnCrearMoto
@@ -283,20 +278,20 @@ public class FrmMotoTrabajo extends javax.swing.JInternalFrame {
         for (int i = 0; i < componentes.size(); i++) {
             for (int j = i + 1; j < componentes.size(); j++) {
 
-            String resultado = validador.validarCompatibilidad(
-                    componentes.get(i).getNombre(),
-                    componentes.get(j).getNombre()
-            );
+                String resultado = validador.validarCompatibilidad(
+                        componentes.get(i).getNombre(),
+                        componentes.get(j).getNombre()
+                );
 
-            if (!resultado.equals("Componentes Compatibles")) {
-                JOptionPane.showMessageDialog(this, resultado);
-                return;
+                if (!resultado.equals("Componentes Compatibles")) {
+                    JOptionPane.showMessageDialog(this, resultado);
+                    return;
+                }
             }
         }
-    }
 
-    JOptionPane.showMessageDialog(this, "Todos los componentes son compatibles");
-     
+        JOptionPane.showMessageDialog(this, "Todos los componentes son compatibles");
+
     }//GEN-LAST:event_btnValidarComActionPerformed
 
     private void btnCrearMotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearMotoActionPerformed
@@ -321,9 +316,11 @@ public class FrmMotoTrabajo extends javax.swing.JInternalFrame {
         componentes.add(carenaje);
 
         String resultado = CONTROLMOTO.crearMotoTrabajo(marca, tipoMoto, fecha, componentes, moto.isTestResistenciaActivado());
-        
 
-    JOptionPane.showMessageDialog(this, resultado);
+        JOptionPane.showMessageDialog(this, resultado);
+        FrmPrincipal frm = new FrmPrincipal();
+        this.dispose();
+        frm.setVisible(true);
     }//GEN-LAST:event_btnCrearMotoActionPerformed
 
     private void btnTestResistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestResistenciaActionPerformed
@@ -346,4 +343,3 @@ public class FrmMotoTrabajo extends javax.swing.JInternalFrame {
     private javax.swing.JLabel txtValidacionCom;
     // End of variables declaration//GEN-END:variables
 }
-

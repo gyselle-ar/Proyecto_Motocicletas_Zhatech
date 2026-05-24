@@ -1,4 +1,3 @@
-
 package presentacion;
 
 import entidades.Componente;
@@ -14,39 +13,38 @@ import negocio.ComponenteControl;
 import negocio.MarcaControl;
 import negocio.MotocicletaControl;
 
-
 public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
 
-   private final javax.swing.ImageIcon iconoOriginal = new javax.swing.ImageIcon(
-        getClass().getResource("/presentacion/imagenes/fondo_CrearDeportiva.png"));
- 
+    private final javax.swing.ImageIcon iconoOriginal = new javax.swing.ImageIcon(
+            getClass().getResource("/presentacion/imagenes/fondo_CrearDeportiva.png"));
+
     private final MarcaControl CONTROLMARCA;
     private final ComponenteControl CONTROLCOMPONENTE;
     private final MotocicletaControl CONTROLMOTO;
     private MotoDeportiva moto;
-   
+
     public FrmMotoDeportiva() {
         initComponents();
-       
+
         CONTROLMARCA = new MarcaControl();
         CONTROLCOMPONENTE = new ComponenteControl();
         CONTROLMOTO = new MotocicletaControl();
         moto = new MotoDeportiva();
-        
+
         cargarMarcas();
         cargarComponentes();
-        
+
         try {
             setMaximum(true);
         } catch (java.beans.PropertyVetoException e) {
             e.printStackTrace();
         }
- 
+
         setFrameIcon(new javax.swing.ImageIcon(
-            getClass().getResource("/presentacion/imagenes/icon_MotoDeportiva.png")));
- 
+                getClass().getResource("/presentacion/imagenes/icon_MotoDeportiva.png")));
+
         getContentPane().removeAll();
- 
+
         javax.swing.JPanel pnlFondo = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(java.awt.Graphics g) {
@@ -55,7 +53,7 @@ public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
             }
         };
         pnlFondo.setLayout(null);
- 
+
         pnlFondo.add(btnActivarTurbo);
         pnlFondo.add(btnModoPista);
         pnlFondo.add(btnCrearMoto_Reporte);
@@ -65,29 +63,29 @@ public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
         pnlFondo.add(cmbManillar);
         pnlFondo.add(cmbRueda);
         pnlFondo.add(cmbCarenaje);
- 
+
         getContentPane().setLayout(new java.awt.BorderLayout());
         getContentPane().add(pnlFondo, java.awt.BorderLayout.CENTER);
- 
+
         pnlFondo.addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 ajustarComponentes(pnlFondo);
             }
         });
- 
+
         hacerBotonesInvisibles();
     }
- 
+
     private void cargarMarcas() {
         cmbMarca.removeAllItems();
         List<Marca> lista = CONTROLMARCA.listarPorTipoMoto(1);
 
-        for(Marca item : lista){
+        for (Marca item : lista) {
             cmbMarca.addItem(item);
         }
     }
-    
+
     private void cargarComponentes() {
 
         cmbMotor.removeAllItems();
@@ -97,91 +95,92 @@ public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
 
         List<Componente> lista = CONTROLCOMPONENTE.listarPorTipoMoto(1);
 
-        for(Componente item : lista){
+        for (Componente item : lista) {
 
-            switch(item.getCategoria()){
+            switch (item.getCategoria()) {
 
-            case "Motor":
-                cmbMotor.addItem(item);
-                break;
+                case "Motor":
+                    cmbMotor.addItem(item);
+                    break;
 
-            case "Rueda":
-                cmbRueda.addItem(item);
-                break;
+                case "Rueda":
+                    cmbRueda.addItem(item);
+                    break;
 
-            case "Manillar":
-                cmbManillar.addItem(item);
-                break;
+                case "Manillar":
+                    cmbManillar.addItem(item);
+                    break;
 
-            case "Carenaje":
-                cmbCarenaje.addItem(item);
-                break;
+                case "Carenaje":
+                    cmbCarenaje.addItem(item);
+                    break;
+            }
         }
     }
-}
-    
+
     private void ajustarComponentes(javax.swing.JPanel panel) {
         int ancho = panel.getWidth();
-        int alto  = panel.getHeight();
-        if (ancho == 0 || alto == 0) return;
- 
-        
+        int alto = panel.getHeight();
+        if (ancho == 0 || alto == 0) {
+            return;
+        }
+
         cmbMarca.setBounds(
-            (int)(ancho * 0.04),
-            (int)(alto  * 0.25),
-            (int)(ancho * 0.24),
-            (int)(alto  * 0.06)
-        ); 
+                (int) (ancho * 0.04),
+                (int) (alto * 0.25),
+                (int) (ancho * 0.24),
+                (int) (alto * 0.06)
+        );
         cmbMotor.setBounds(
-            (int)(ancho * 0.43),
-            (int)(alto  * 0.21),
-            (int)(ancho * 0.19),
-            (int)(alto  * 0.06)
+                (int) (ancho * 0.43),
+                (int) (alto * 0.21),
+                (int) (ancho * 0.19),
+                (int) (alto * 0.06)
         );
         cmbManillar.setBounds(
-            (int)(ancho * 0.43),
-            (int)(alto  * 0.29),
-            (int)(ancho * 0.19),
-            (int)(alto  * 0.06)
+                (int) (ancho * 0.43),
+                (int) (alto * 0.29),
+                (int) (ancho * 0.19),
+                (int) (alto * 0.06)
         );
         cmbRueda.setBounds(
-            (int)(ancho * 0.43),
-            (int)(alto  * 0.37),
-            (int)(ancho * 0.19),
-            (int)(alto  * 0.06)
+                (int) (ancho * 0.43),
+                (int) (alto * 0.37),
+                (int) (ancho * 0.19),
+                (int) (alto * 0.06)
         );
         cmbCarenaje.setBounds(
-            (int)(ancho * 0.43),
-            (int)(alto  * 0.45),
-            (int)(ancho * 0.19),
-            (int)(alto  * 0.06)
+                (int) (ancho * 0.43),
+                (int) (alto * 0.45),
+                (int) (ancho * 0.19),
+                (int) (alto * 0.06)
         );
         btnValidarCom.setBounds(
-            (int)(ancho * 0.65),
-            (int)(alto  * 0.48),
-            (int)(ancho * 0.30),
-            (int)(alto  * 0.07)
+                (int) (ancho * 0.65),
+                (int) (alto * 0.48),
+                (int) (ancho * 0.30),
+                (int) (alto * 0.07)
         );
         btnActivarTurbo.setBounds(
-            (int)(ancho * 0.31),
-            (int)(alto  * 0.64),
-            (int)(ancho * 0.33),
-            (int)(alto  * 0.07)
+                (int) (ancho * 0.31),
+                (int) (alto * 0.64),
+                (int) (ancho * 0.33),
+                (int) (alto * 0.07)
         );
         btnModoPista.setBounds(
-            (int)(ancho * 0.31),
-            (int)(alto  * 0.73),
-            (int)(ancho * 0.33),
-            (int)(alto  * 0.07)
+                (int) (ancho * 0.31),
+                (int) (alto * 0.73),
+                (int) (ancho * 0.33),
+                (int) (alto * 0.07)
         );
         btnCrearMoto_Reporte.setBounds(
-            (int)(ancho * 0.69),
-            (int)(alto  * 0.82),
-            (int)(ancho * 0.25),
-            (int)(alto  * 0.09)
+                (int) (ancho * 0.69),
+                (int) (alto * 0.82),
+                (int) (ancho * 0.25),
+                (int) (alto * 0.09)
         );
     }
- 
+
     private void hacerBotonesInvisibles() {
         javax.swing.JButton[] botones = {
             btnActivarTurbo, btnModoPista, btnCrearMoto_Reporte, btnValidarCom
@@ -194,7 +193,7 @@ public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
             btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         }
     }
- 
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -295,7 +294,11 @@ public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
 
         String resultado = CONTROLMOTO.crearMotoDeportiva(marca, tipoMoto, fecha, componentes, moto.isTurboActivado(), moto.isModoPista());
 
-    JOptionPane.showMessageDialog(this, resultado);
+        JOptionPane.showMessageDialog(this, resultado);
+
+        FrmPrincipal frm = new FrmPrincipal();
+        this.dispose();
+        frm.setVisible(true);
     }//GEN-LAST:event_btnCrearMoto_ReporteActionPerformed
 
     private void cmbMotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMotorActionPerformed
@@ -324,19 +327,19 @@ public class FrmMotoDeportiva extends javax.swing.JInternalFrame {
         for (int i = 0; i < componentes.size(); i++) {
             for (int j = i + 1; j < componentes.size(); j++) {
 
-            String resultado = validador.validarCompatibilidad(
-                    componentes.get(i).getNombre(),
-                    componentes.get(j).getNombre()
-            );
+                String resultado = validador.validarCompatibilidad(
+                        componentes.get(i).getNombre(),
+                        componentes.get(j).getNombre()
+                );
 
-            if (!resultado.equals("Componentes Compatibles")) {
-                JOptionPane.showMessageDialog(this, resultado);
-                return;
+                if (!resultado.equals("Componentes Compatibles")) {
+                    JOptionPane.showMessageDialog(this, resultado);
+                    return;
+                }
             }
         }
-    }
 
-    JOptionPane.showMessageDialog(this, "Todos los componentes son compatibles");
+        JOptionPane.showMessageDialog(this, "Todos los componentes son compatibles");
     }//GEN-LAST:event_btnValidarComActionPerformed
 
     private void btnActivarTurboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarTurboActionPerformed

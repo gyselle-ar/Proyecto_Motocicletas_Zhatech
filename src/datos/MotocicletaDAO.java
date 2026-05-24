@@ -2,6 +2,7 @@ package datos;
 
 import database.Conexion;
 import datos.interfaces.CrudSimpleInterface;
+import entidades.Componente;
 import entidades.Marca;
 import entidades.MotoCruiser;
 import entidades.MotoDeportiva;
@@ -149,7 +150,7 @@ public class MotocicletaDAO implements CrudSimpleInterface<Motocicleta> {
         Motocicleta moto = null;
 
         try {
-            ps = CON.conectar().prepareStatement("SELECT FROM motocicleta WHERE id_motocicleta = ?");
+            ps = CON.conectar().prepareStatement("SELECT * FROM motocicleta WHERE id_motocicleta = ?");
             ps.setInt(1, idMotocicleta);
             rs = ps.executeQuery();
 
@@ -176,6 +177,9 @@ public class MotocicletaDAO implements CrudSimpleInterface<Motocicleta> {
                 tipo.setIdTipoMoto(rs.getInt(3));
                 moto.setTipoMoto(tipo);
                 moto.setFechaCreacion(rs.getDate(4).toLocalDate());
+                ComponenteDAO componenteDao = new ComponenteDAO();
+                List<Componente> componentes = componenteDao.listarPorTipoMoto(moto.getTipoMoto().getIdTipoMoto());
+                moto.setComponentes(componentes);
             }
             ps.close();
             rs.close();

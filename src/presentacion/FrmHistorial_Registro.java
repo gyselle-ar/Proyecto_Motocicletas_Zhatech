@@ -104,7 +104,7 @@ public class FrmHistorial_Registro extends javax.swing.JInternalFrame {
             });
         }
 
-        lbMotosCreadas.setText( String.valueOf(CONTROL.getMotosCreadas()));
+        lbMotosCreadas.setText(String.valueOf(CONTROL.getMotosCreadas()));
     }
 
     private void ajustarComponentes(javax.swing.JPanel panel) {
@@ -281,7 +281,7 @@ public class FrmHistorial_Registro extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(null, resultado);
 
         cargarTabla();
-        
+
     }//GEN-LAST:event_btnEliminarMotoActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -292,35 +292,19 @@ public class FrmHistorial_Registro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void tablaHistorialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaHistorialMouseClicked
-        tablaHistorial.addMouseListener(new java.awt.event.MouseAdapter() {
 
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        int fila = tablaHistorial.rowAtPoint(evt.getPoint());
+        int columna = tablaHistorial.columnAtPoint(evt.getPoint());
 
-                int fila = tablaHistorial.rowAtPoint(evt.getPoint());
-                int columna = tablaHistorial.columnAtPoint(evt.getPoint());
+        if (fila != -1 && columna == 4) {
+            int idMotocicleta = Integer.parseInt(tablaHistorial.getValueAt(fila, 0).toString());
+            Motocicleta moto = CONTROL.buscarPorId(idMotocicleta);
 
-                if (columna == 4) {
-
-                    int idMoto = Integer.parseInt(
-                            tablaHistorial.getValueAt(fila, 0).toString()
-                    );
-
-                    String reporte = REPORTECONTROL.verReporte(idMoto);
-
-                    if (reporte != null) {
-
-                        JOptionPane.showMessageDialog(
-                                null,
-                                reporte,
-                                "Reporte de Motocicleta",
-                                JOptionPane.INFORMATION_MESSAGE
-                        );
-                    }
-                }
-            }
-        });
-
+            Reporte reporte = moto.generarReporte();
+            FrmPestañaReporte frm = new FrmPestañaReporte(reporte.getDescripcion());
+            this.getDesktopPane().add(frm);
+            frm.setVisible(true);
+        }
     }//GEN-LAST:event_tablaHistorialMouseClicked
 
 

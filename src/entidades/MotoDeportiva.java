@@ -1,6 +1,7 @@
 package entidades;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MotoDeportiva extends Motocicleta {
@@ -108,7 +109,7 @@ public class MotoDeportiva extends Motocicleta {
                 carenaje = c.getNombre();
             }
             
-            if (c.getCategoria().equalsIgnoreCase("Ruedas")) {
+            if (c.getCategoria().equalsIgnoreCase("Rueda")) {
                 ruedas = c.getNombre();
             }
             
@@ -119,7 +120,7 @@ public class MotoDeportiva extends Motocicleta {
             rendimiento += calcularPuntos(c.getNombre());
         }
       
-        String descripcion = "Motor: " + motor 
+        String descripcion = "\nMotor: " + motor 
                             + "\nCarenaje: " + carenaje 
                             + "\nRuedas: " + ruedas 
                             + "\nManillar: " + manillar; 

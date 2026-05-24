@@ -55,7 +55,6 @@ public class FrmMotoCruiser extends javax.swing.JInternalFrame {
             }
         };
         pnlFondo.setLayout(null);
- 
         pnlFondo.add(btnTestConfort);
         pnlFondo.add(btnCrearYGenerar);
         pnlFondo.add(btnValidarCompatibilidad);
@@ -211,6 +210,7 @@ public class FrmMotoCruiser extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         btnTestConfort = new javax.swing.JButton();
         btnCrearYGenerar = new javax.swing.JButton();
         btnValidarCompatibilidad = new javax.swing.JButton();
@@ -220,7 +220,6 @@ public class FrmMotoCruiser extends javax.swing.JInternalFrame {
         cmbCarenaje = new javax.swing.JComboBox<>();
         cmbMarca = new javax.swing.JComboBox<>();
         lbMensajeValidacion = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setClosable(true);
@@ -230,6 +229,9 @@ public class FrmMotoCruiser extends javax.swing.JInternalFrame {
         getContentPane().setLayout(null);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/fondo_CrearCruiser.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         btnTestConfort.addActionListener(this::btnTestConfortActionPerformed);
         jPanel1.add(btnTestConfort, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 470, 350, 70));
@@ -267,9 +269,6 @@ public class FrmMotoCruiser extends javax.swing.JInternalFrame {
         cmbMarca.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(cmbMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 230, 50));
         jPanel1.add(lbMensajeValidacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 200, 310, 120));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/fondo_CrearCruiser.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 1000, 667);
@@ -347,6 +346,12 @@ public class FrmMotoCruiser extends javax.swing.JInternalFrame {
         String resultado = CONTROLMOTO.crearMotoCruiser(marca, tipoMoto, fecha, componentes, moto.isTestConfortActivado());
 
     JOptionPane.showMessageDialog(this, resultado);
+    
+        FrmPrincipal frm = new FrmPrincipal();
+        this.dispose();
+        frm.setVisible(true);
+    
+    
     }//GEN-LAST:event_btnCrearYGenerarActionPerformed
 
 
