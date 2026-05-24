@@ -66,16 +66,10 @@ public class ReporteDAO implements CrudSimpleInterface<Reporte>{
        
        try {
             ps = CON.conectar().prepareStatement("INSERT INTO reporte (id_motocicleta, descripcion) values (?,?)");
-            
-            System.out.println(
-            "ID QUE SE ENVIA AL REPORTE: "
-            + reporte.getMotocicleta().getIdMotocicleta()
-        );
             ps.setInt(1, reporte.getMotocicleta().getIdMotocicleta());
             ps.setString(2, reporte.getDescripcion());
             if (ps.executeUpdate() > 0) {
                 resp = true;
-                 System.out.println("Reporte guardado correctamente");
             }
             ps.close();
             
